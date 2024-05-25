@@ -1,6 +1,7 @@
 # projekt_koncowy
 
 **Tytuł**
+
 Aplikacja do zarządzania statystykami meczów piłkarskich
 
 **Opis projektu**
