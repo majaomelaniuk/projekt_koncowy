@@ -20,6 +20,9 @@ class Czlowiek implements Serializable
         this.nazwisko = nazwisko;
     }
 
+    public String getImie() { return imie; }
+    public String getNazwisko() { return nazwisko; }
+
     public void zapisz(String plik)
     {
         try
@@ -77,6 +80,8 @@ class Pilkarz extends Czlowiek {
         this.numer = numer;
     }
 
+    public int getNumer() { return numer; }
+
     @Override
     public String toString() {
         return imie + " " + nazwisko + " (Numer: " + numer + ")";
@@ -125,12 +130,12 @@ class Trener extends Czlowiek {
         this.rok = rok;
     }
 
+    public int getRok() { return this.rok; }
+
     @Override
     public String toString() {
         return imie + " " + nazwisko + "\nObjecie trenerstwa: " + rok;
     }
-
-    public int getRok() { return this.rok; }
 
     @Override
     public void odczytaj(String plik)
@@ -164,21 +169,23 @@ class Napastnik extends Pilkarz {
 
     private int bramki = 0;
 
-    public Napastnik()
-    {
-        super();
-    }
+    public Napastnik() { super(); }
 
     public Napastnik(String imie, String nazwisko, int numer) {
         super(imie, nazwisko, numer);
     }
 
+    public void dodajBramke()
+    {
+        bramki++;
+    }
+
+    public int getBramki() { return this.bramki; }
+
     @Override
     public String toString() {
         return imie + " " + nazwisko + " (Numer: " + numer + ")\nStrzelone bramki: " + bramki;
     }
-
-    public int getBramki() { return this.bramki; }
 
     @Override
     public void odczytaj(String plik)
@@ -211,12 +218,11 @@ class Napastnik extends Pilkarz {
 
 class Kapitan extends Pilkarz {
     private int rok;
-    private int bramki = 0;
 
     public Kapitan()
     {
         super();
-        this.rok = 0;
+        rok = 0;
     }
 
     public Kapitan(String imie, String nazwisko, int numer, int rok) {
@@ -224,14 +230,11 @@ class Kapitan extends Pilkarz {
         this.rok = rok;
     }
 
-    public void dodajBramke()
-    {
-        bramki++;
-    }
+    public int getRok() { return rok; } 
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + " (Numer: " + numer + ")\nStrzelone bramki: " + bramki + "\nKapitan od: " + rok;
+        return super.toString() + "\nKapitan od: " + rok;
     }
 
     @Override
@@ -248,7 +251,6 @@ class Kapitan extends Pilkarz {
             this.nazwisko = pom.nazwisko;
             this.numer = pom.numer;
             this.rok = pom.rok;
-            this.bramki = pom.bramki;
 
             in.close();
         }
@@ -266,6 +268,7 @@ class Kapitan extends Pilkarz {
 
 class Bramkarz extends Pilkarz {
     private int liczbaObron = 0;
+    private int bramki = 0;
 
     public Bramkarz() { super(); }
 
@@ -277,13 +280,20 @@ class Bramkarz extends Pilkarz {
         liczbaObron++;
     }
 
+    public void dodajBramke()
+    {
+        bramki++;
+    }
+
     public int getLiczbaObron() {
         return liczbaObron;
     }
 
+    public int getBramki() { return bramki; }
+
     @Override
     public String toString() {
-        return super.toString() + " (Bramkarz, Obrony: " + liczbaObron + ")";
+        return super.toString() + "\nBramkarz\nObrony: " + liczbaObron + "\nBramki: " + bramki;
     }
 
     @Override
@@ -481,6 +491,9 @@ class Druzyna implements Serializable
     private int przegrane;
     private int bramkiZdobyte;
     private int bramkiStracone;
+    private Trener trener;
+    private Kapitan kapitan;
+    private List <Pilkarz> pilkarze;
 
     public Druzyna(String nazwa) {
         this.nazwa = nazwa;
@@ -515,6 +528,9 @@ class Druzyna implements Serializable
         this.przegrane = 0;
         this.bramkiZdobyte =0;
         this.bramkiStracone = 0;
+        this.trener = new Trener();
+        this.kapitan = new Kapitan();
+        this.pilkarze = new ArrayList<>();
     }
 
     public String getNazwa() {
@@ -527,6 +543,41 @@ class Druzyna implements Serializable
 
     public int getRozegraneMecze() {
         return rozegraneMecze;
+    }
+
+    public void setTrener(Trener trener)
+    {
+        this.trener = trener;
+    }
+
+    public void setKapitan(Kapitan kapitan)
+    {
+        this.kapitan = kapitan;
+    }
+
+    public void dodajPilkarza(Pilkarz pilkarz)
+    {
+        this.pilkarze.add(pilkarz);
+    } 
+
+    public String getTrener()
+    {
+        return trener.toString();
+    }
+
+    public String getKapitan()
+    {
+        return kapitan.toString();
+    }
+
+    public String getPilkarze()
+    {
+        String lista_pilkarzy = "";
+        for (Pilkarz pilkarz : this.pilkarze)
+        {
+            lista_pilkarzy += pilkarz.toString() + "\n";
+        }
+        return lista_pilkarzy;
     }
 
     @Override
