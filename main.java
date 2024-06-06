@@ -209,7 +209,9 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Main().setVisible(true);
+                Tabela tabela = new Tabela();
+                TabelaWidok tabelaWidok = new TabelaWidok(tabela);
+                tabelaWidok.setVisible(true);
             }
         });
     }

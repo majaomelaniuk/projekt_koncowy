@@ -545,6 +545,26 @@ class Druzyna implements Serializable
         return rozegraneMecze;
     }
 
+    public int getWygrane() {
+        return wygrane;
+    }
+
+    public int getRemisy() {
+        return remisy;
+    }
+
+    public int getPrzegrane() {
+        return przegrane;
+    }
+
+    public int getBramkiZdobyte() {
+        return bramkiZdobyte;
+    }
+
+    public int getBramkiStracone() {
+        return bramkiStracone;
+    }
+
     public void setTrener(Trener trener)
     {
         this.trener = trener;
@@ -636,7 +656,7 @@ class Druzyna implements Serializable
 
 public class Tabela implements Serializable
 {
-    private List<Druzyna> druzyny;
+    public List<Druzyna> druzyny;
     public List<Mecz> mecze;
 
     public Tabela() {
