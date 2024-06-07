@@ -230,7 +230,7 @@ class Kapitan extends Pilkarz {
         this.rok = rok;
     }
 
-    public int getRok() { return rok; } 
+    public int getRok() { return rok; }
 
     @Override
     public String toString() {
@@ -347,11 +347,29 @@ class Kartka {
     private Pilkarz pilkarz;
     private String kolor;
     private int minuta;
+    private String druzyna;
 
-    public Kartka(Pilkarz pilkarz, String kolor, int minuta) {
+    public Kartka(Pilkarz pilkarz, String kolor, int minuta, String druzyna) {
         this.pilkarz = pilkarz;
         this.kolor = kolor;
         this.minuta = minuta;
+        this.druzyna = druzyna;
+    }
+
+    public Pilkarz getPilkarz() {
+        return pilkarz;
+    }
+
+    public String getKolor() {
+        return kolor;
+    }
+
+    public int getMinuta() {
+        return minuta;
+    }
+
+    public String getDruzyna() {
+        return druzyna;
     }
 
     @Override
@@ -360,8 +378,8 @@ class Kartka {
     }
 }
 
-class Mecz implements Serializable
-{
+
+class Mecz implements Serializable {
     private String druzyna1;
     private String druzyna2;
     private List<Gol> gole;
@@ -389,8 +407,8 @@ class Mecz implements Serializable
         }
     }
 
-    public void dodajKartke(Pilkarz pilkarz, String kolor, int minuta) {
-        kartki.add(new Kartka(pilkarz, kolor, minuta));
+    public void dodajKartke(Pilkarz pilkarz, String kolor, int minuta, String druzyna) {
+        kartki.add(new Kartka(pilkarz, kolor, minuta, druzyna));
     }
 
     public String getDruzyna1() {
@@ -407,6 +425,10 @@ class Mecz implements Serializable
 
     public int getBramki2() {
         return bramki2;
+    }
+
+    public List<Kartka> getKartki() {
+        return kartki;
     }
 
     public boolean czyStrzelec(Pilkarz pilkarz) {
@@ -431,54 +453,43 @@ class Mecz implements Serializable
         return "Mecz: " + druzyna1 + " vs " + druzyna2 + "\nGole: " + gole + "\nKartki: " + kartki + "\nWynik: " + bramki1 + " - " + bramki2;
     }
 
-    public void zapisz(String plik)
-    {
-        try
-        {
+    public void zapisz(String plik) {
+        try {
             FileOutputStream plikOut = new FileOutputStream(plik);
             ObjectOutputStream out = new ObjectOutputStream(plikOut);
 
             out.writeObject(this);
             out.close();
             System.out.println("Zapisano");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void odczytaj(String plik)
-    {
-        try
-        {
+    public void odczytaj(String plik) {
+        try {
             FileInputStream plikIn = new FileInputStream(plik);
             ObjectInputStream in = new ObjectInputStream(plikIn);
 
             Mecz pom = (Mecz) in.readObject();
 
-        this.druzyna1 = pom.druzyna1;
-        this.druzyna2 = pom.druzyna2;
-        this.gole     = pom.gole;
-        this.kartki   = pom.kartki;
-        this.bramki1  = pom.bramki1;
-        this.bramki2  = pom.bramki2;
-        this.czyZaktualizowano = pom.czyZaktualizowano;
+            this.druzyna1 = pom.druzyna1;
+            this.druzyna2 = pom.druzyna2;
+            this.gole = pom.gole;
+            this.kartki = pom.kartki;
+            this.bramki1 = pom.bramki1;
+            this.bramki2 = pom.bramki2;
+            this.czyZaktualizowano = pom.czyZaktualizowano;
 
             in.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Nie znaleziono klasy");
             e.printStackTrace();
         }
     }
 }
-
 
 
 class Druzyna implements Serializable
@@ -578,7 +589,7 @@ class Druzyna implements Serializable
     public void dodajPilkarza(Pilkarz pilkarz)
     {
         this.pilkarze.add(pilkarz);
-    } 
+    }
 
     public String getTrener()
     {
