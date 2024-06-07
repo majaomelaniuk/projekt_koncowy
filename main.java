@@ -158,7 +158,7 @@ public class Main extends JFrame {
             if (typ.equals("Gol")) {
                 ostatniMecz.dodajGol(druzyna, pilkarz, minuta);
             } else if (typ.equals("Kartka")) {
-                ostatniMecz.dodajKartke(pilkarz, kolor, minuta);
+                ostatniMecz.dodajKartke(pilkarz, kolor, minuta, druzyna);
             }
 
             textArea.setText(tabela.toString());
@@ -235,6 +235,7 @@ public class Main extends JFrame {
                 tabela.dodajMecz(mecz2);
 
                 Mecz mecz3 = new Mecz("WKS", "Lech");
+                mecz3.dodajKartke(new Pilkarz(" ", " ", 10), "czerwona", 30, "Lech");
                 mecz3.dodajGol("WKS", new Pilkarz(" ", " ", 10), 20);
                 mecz3.dodajGol("Lech", new Pilkarz(" ", " ", 11), 40);
                 tabela.dodajMecz(mecz3);
@@ -245,6 +246,7 @@ public class Main extends JFrame {
                 tabela.dodajMecz(mecz4);
 
                 Mecz mecz5 = new Mecz("WKS", "Legia");
+                mecz5.dodajKartke(new Pilkarz(" ", " ", 10), "żółta", 30, "WKS");
                 mecz5.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
                 mecz5.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
                 tabela.dodajMecz(mecz5);
