@@ -256,6 +256,37 @@ public class Main extends JFrame {
                 mecz6.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
                 tabela.dodajMecz(mecz6);
 
+                Mecz mecz7 = new Mecz("WKS", "Widzew");
+                mecz7.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz7.dodajGol("Widzew", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz7);
+
+                Mecz mecz8 = new Mecz("Lech", "Jagiellonia");
+                mecz8.dodajGol("Lech", new Pilkarz(" ", " ", 11), 10);
+                mecz8.dodajGol("Lech", new Pilkarz(" ", " ", 11), 30);
+                mecz8.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 7), 45);
+                tabela.dodajMecz(mecz8);
+
+                Mecz mecz9 = new Mecz("WKS", "Lech");
+                mecz9.dodajKartke(new Pilkarz(" ", " ", 10), "czerwona", 30, "Lech");
+                mecz9.dodajGol("WKS", new Pilkarz(" ", " ", 10), 20);
+                mecz9.dodajGol("Lech", new Pilkarz(" ", " ", 11), 40);
+                tabela.dodajMecz(mecz9);
+
+                Mecz mecz10 = new Mecz("WKS", "Legia");
+                mecz10.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz10.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz10);
+
+                Mecz mecz11 = new Mecz("WKS", "Piast");
+                mecz11.dodajGol("Piast", new Pilkarz(" ", " ", 10), 15);
+                mecz11.dodajGol("WKS", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz11);
+
+                Mecz mecz12 = new Mecz("WKS", "Jagiellonia");
+                mecz12.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz12);
+
                 tabela.aktualizujTabele();
                 TabelaWidok tabelaWidok = new TabelaWidok(tabela);
                 tabelaWidok.setVisible(true);
@@ -263,5 +294,3 @@ public class Main extends JFrame {
         });
     }
 }
-
-
