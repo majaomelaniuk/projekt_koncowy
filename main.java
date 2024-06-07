@@ -84,7 +84,7 @@ public class Main extends JFrame {
         inputPanel.add(addButton);
 
         add(inputPanel, BorderLayout.EAST);
-        
+
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Opcje");
 
@@ -210,9 +210,56 @@ public class Main extends JFrame {
             @Override
             public void run() {
                 Tabela tabela = new Tabela();
+
+                Druzyna druzyna1 = new Druzyna("WKS");
+                Druzyna druzyna2 = new Druzyna("Legia");
+                Druzyna druzyna3 = new Druzyna("Lech");
+                Druzyna druzyna4 = new Druzyna("Jagiellonia");
+                Druzyna druzyna5 = new Druzyna("Widzew");
+                Druzyna druzyna6 = new Druzyna("Piast");
+                tabela.dodajDruzyne(druzyna1);
+                tabela.dodajDruzyne(druzyna2);
+                tabela.dodajDruzyne(druzyna3);
+                tabela.dodajDruzyne(druzyna4);
+                tabela.dodajDruzyne(druzyna5);
+                tabela.dodajDruzyne(druzyna6);
+                Mecz mecz1 = new Mecz("WKS", "Legia");
+                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz1);
+
+                Mecz mecz2 = new Mecz("Lech", "Jagiellonia");
+                mecz2.dodajGol("Lech", new Pilkarz(" ", " ", 11), 10);
+                mecz2.dodajGol("Lech", new Pilkarz(" ", " ", 11), 30);
+                mecz2.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 7), 45);
+                tabela.dodajMecz(mecz2);
+
+                Mecz mecz3 = new Mecz("WKS", "Lech");
+                mecz3.dodajGol("WKS", new Pilkarz(" ", " ", 10), 20);
+                mecz3.dodajGol("Lech", new Pilkarz(" ", " ", 11), 40);
+                tabela.dodajMecz(mecz3);
+
+                Mecz mecz4 = new Mecz("WKS", "Legia");
+                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz4);
+
+                Mecz mecz5 = new Mecz("WKS", "Legia");
+                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz5);
+
+                Mecz mecz6 = new Mecz("WKS", "Legia");
+                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                tabela.dodajMecz(mecz6);
+
+                tabela.aktualizujTabele();
                 TabelaWidok tabelaWidok = new TabelaWidok(tabela);
                 tabelaWidok.setVisible(true);
             }
         });
     }
 }
+
+
