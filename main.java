@@ -240,18 +240,18 @@ public class Main extends JFrame {
                 tabela.dodajMecz(mecz3);
 
                 Mecz mecz4 = new Mecz("WKS", "Legia");
-                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                mecz4.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz4.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
                 tabela.dodajMecz(mecz4);
 
                 Mecz mecz5 = new Mecz("WKS", "Legia");
-                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                mecz5.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz5.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
                 tabela.dodajMecz(mecz5);
 
                 Mecz mecz6 = new Mecz("WKS", "Legia");
-                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                mecz6.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
+                mecz6.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
                 tabela.dodajMecz(mecz6);
 
                 tabela.aktualizujTabele();
