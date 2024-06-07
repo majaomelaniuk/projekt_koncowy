@@ -8,9 +8,36 @@ class MeczeWidok extends JFrame {
         setLayout(new GridLayout(0, 2, 10, 10));
 
         for (Mecz mecz : tabela.mecze) {
-            String buttonText = "<html><center>" + mecz.getDruzyna1() + "<br>" +
-                    mecz.getBramki1() + " - " + mecz.getBramki2() + "<br>" +
-                    mecz.getDruzyna2() + "</center></html>";
+            StringBuilder buttonTextBuilder = new StringBuilder("<html><center>");
+            buttonTextBuilder.append(mecz.getDruzyna1());
+
+            for (Kartka kartka : mecz.getKartki()) {
+                if (mecz.getDruzyna1().equals(kartka.getDruzyna())) {
+                    if (kartka.getKolor().equals("żółta")) {
+                        buttonTextBuilder.append(" <span style='color:yellow;'>■</span>");
+                    } else if (kartka.getKolor().equals("czerwona")) {
+                        buttonTextBuilder.append(" <span style='color:red;'>■</span>");
+                    }
+                }
+            }
+
+            buttonTextBuilder.append("<br>");
+            buttonTextBuilder.append(mecz.getBramki1()).append(" - ").append(mecz.getBramki2());
+            buttonTextBuilder.append("<br>");
+            buttonTextBuilder.append(mecz.getDruzyna2());
+
+            for (Kartka kartka : mecz.getKartki()) {
+                if (mecz.getDruzyna2().equals(kartka.getDruzyna())) {
+                    if (kartka.getKolor().equals("żółta")) {
+                        buttonTextBuilder.append(" <span style='color:yellow;'>■</span>");
+                    } else if (kartka.getKolor().equals("czerwona")) {
+                        buttonTextBuilder.append(" <span style='color:red;'>■</span>");
+                    }
+                }
+            }
+
+            buttonTextBuilder.append("</center></html>");
+            String buttonText = buttonTextBuilder.toString();
 
             JButton button = new JButton(buttonText);
             button.setBackground(new Color(0, 100, 0));
