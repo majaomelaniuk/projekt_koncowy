@@ -2,8 +2,12 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import java.net.URL;
 
 import java.awt.*;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 class TabelaWidok extends JFrame
 {
@@ -116,31 +120,49 @@ class TabelaWidok extends JFrame
         JScrollPane przewijalne = new JScrollPane(wiersze);
         przewijalne.setCorner(JScrollPane.UPPER_RIGHT_CORNER, naroznik);
         przewijalne.setVerticalScrollBar(przewijak);
-        przewijalne.getViewport().setBackground(new Color(0, 100, 0)); // Dodaj tę linię
+        przewijalne.getViewport().setBackground(new Color(0, 100, 0));
         panel.add(przewijalne, BorderLayout.CENTER);
         panel.setSize(300, 150);
         panel.setVisible(true);
+        
+        
+        JPanel gorny_panel = new JPanel();
+        gorny_panel.setLayout(new BorderLayout());
+        gorny_panel.setBackground(new Color(0, 100, 0));
+
+        try
+        {
+            Image obrazek_pilki = ImageIO.read(new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Soccer_ball.svg/440px-Soccer_ball.svg.png"));
+            Image wyskalowany_obrazek_pilki = obrazek_pilki.getScaledInstance(90, 90, Image.SCALE_DEFAULT);
+            ImageIcon ikonka_obrazka_pilki = new ImageIcon(wyskalowany_obrazek_pilki);
+            JLabel obszar_obrazka_pilki = new JLabel(ikonka_obrazka_pilki);
+            obszar_obrazka_pilki.setHorizontalAlignment(JLabel.CENTER);
+            obszar_obrazka_pilki.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            gorny_panel.add(obszar_obrazka_pilki, BorderLayout.CENTER);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        JPanel gorne_przyciski = new JPanel();
+        gorne_przyciski.setLayout(new GridLayout(1, 2));
 
         JButton druzyny = new JButton("Druzyny");
-        JButton mecze = new JButton("Mecze");
-        JButton dodaj = new JButton("Dodaj druzyne");
-
-        JPanel gorny_panel = new JPanel();
-        gorny_panel.setLayout(new GridLayout(1, 2));
-
         druzyny.setBackground(new Color(0, 100, 0));
         druzyny.setForeground(Color.WHITE);
-        druzyny.setFont(new Font("Dialog", Font.BOLD, 12));
-
+        druzyny.setFont(new Font("Dialog", Font.BOLD, 16));
+        gorne_przyciski.add(druzyny);
+        
+        JButton mecze = new JButton("Mecze");
         mecze.setBackground(new Color(0, 100, 0));
         mecze.setForeground(Color.WHITE);
-        mecze.setFont(new Font("Dialog", Font.BOLD, 12));
-
-        gorny_panel.add(druzyny);
-        gorny_panel.add(mecze);
-
-        gorny_panel.setBackground(new Color(0, 100, 0));
-        gorny_panel.setForeground(Color.WHITE);
+        mecze.setFont(new Font("Dialog", Font.BOLD, 16));
+        gorne_przyciski.add(mecze);
+        
+        gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
+    
+        JButton dodaj = new JButton("Dodaj druzyne");
 
         JPanel dolny_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         dodaj.setBackground(new Color(0, 100, 0));
