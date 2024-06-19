@@ -81,6 +81,14 @@ class TabelaWidok extends JFrame {
         gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
 
         JButton dodaj_druzyne = new JButton("Dodaj drużynę");
+        
+        dodaj_druzyne.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DodajDruzyneWidok(tabela);
+            }
+        });
+
         JButton dodaj_mecz = new JButton("Dodaj mecz");
 
         dodaj_mecz.addActionListener(new ActionListener() {
