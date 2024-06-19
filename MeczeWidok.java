@@ -1,10 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 
-class MeczeWidok extends JFrame {
+class MeczeWidok extends JPanel {
     MeczeWidok(Tabela tabela) {
-        setTitle("Przegląd Meczów");
-        getContentPane().setBackground(new Color(0, 100, 0));
+        setBackground(new Color(0, 100, 0));
         setLayout(new GridLayout(0, 2, 10, 10));
 
         for (Mecz mecz : tabela.mecze) {
@@ -48,9 +47,5 @@ class MeczeWidok extends JFrame {
 
             add(button);
         }
-
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        pack();
-        setVisible(true);
     }
 }
