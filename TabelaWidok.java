@@ -83,6 +83,13 @@ class TabelaWidok extends JFrame {
         JButton dodaj_druzyne = new JButton("Dodaj drużynę");
         JButton dodaj_mecz = new JButton("Dodaj mecz");
 
+        dodaj_mecz.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new DodajMeczWidok(tabela);
+            }
+        });
+
         JPanel dolny_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         dolny_panel.setBackground(new Color(0, 100, 0));
         dolny_panel.setForeground(Color.WHITE);        

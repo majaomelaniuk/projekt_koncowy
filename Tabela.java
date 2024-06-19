@@ -329,6 +329,7 @@ class Bramkarz extends Pilkarz {
 class Gol {
     private Pilkarz strzelec;
     private int minuta;
+    
     public Gol(Pilkarz strzelec, int minuta) {
         this.strzelec = strzelec;
         this.minuta = minuta;
