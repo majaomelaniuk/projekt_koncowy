@@ -80,16 +80,23 @@ class TabelaWidok extends JFrame {
 
         gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
 
-        JButton dodaj = new JButton("Dodaj drużynę");
+        JButton dodaj_druzyne = new JButton("Dodaj drużynę");
+        JButton dodaj_mecz = new JButton("Dodaj mecz");
 
         JPanel dolny_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        dodaj.setBackground(new Color(0, 100, 0));
-        dodaj.setForeground(Color.WHITE);
-        dodaj.setFont(new Font("Dialog", Font.BOLD, 12));
-
-        dolny_panel.add(dodaj);
         dolny_panel.setBackground(new Color(0, 100, 0));
-        dolny_panel.setForeground(Color.WHITE);
+        dolny_panel.setForeground(Color.WHITE);        
+
+        dodaj_druzyne.setBackground(new Color(0, 100, 0));
+        dodaj_druzyne.setForeground(Color.WHITE);
+        dodaj_druzyne.setFont(new Font("Dialog", Font.BOLD, 12));
+
+        dodaj_mecz.setBackground(new Color(0, 100, 0));
+        dodaj_mecz.setForeground(Color.WHITE);
+        dodaj_mecz.setFont(new Font("Dialog", Font.BOLD, 12));
+
+        dolny_panel.add(dodaj_druzyne);
+        dolny_panel.add(dodaj_mecz);
 
         add(gorny_panel, BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
@@ -97,6 +104,8 @@ class TabelaWidok extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        this.repaint();
+        this.revalidate();
         pack();
         setVisible(true);
     }

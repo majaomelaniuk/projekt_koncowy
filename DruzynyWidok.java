@@ -92,6 +92,8 @@ class DruzynyWidok extends JPanel{
         przewijalne.setVerticalScrollBar(przewijak);
         przewijalne.getViewport().setBackground(new Color(0, 100, 0));
 
+        this.repaint();
+        this.revalidate();
         add(przewijalne);   
     }
 }

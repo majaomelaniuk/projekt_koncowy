@@ -46,6 +46,9 @@ class MeczeWidok extends JPanel {
             button.setFocusPainted(false);
 
             add(button);
+
+            this.repaint();
+            this.revalidate();
         }
     }
 }
