@@ -84,7 +84,7 @@ class Pilkarz extends Czlowiek {
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + " (Numer: " + numer + ")";
+        return numer + ". " + imie + " " + nazwisko;
     }
 
     @Override
@@ -181,11 +181,6 @@ class Napastnik extends Pilkarz {
     }
 
     public int getBramki() { return this.bramki; }
-
-    @Override
-    public String toString() {
-        return imie + " " + nazwisko + " (Numer: " + numer + ")\nStrzelone bramki: " + bramki;
-    }
 
     @Override
     public void odczytaj(String plik)
@@ -290,11 +285,6 @@ class Bramkarz extends Pilkarz {
     }
 
     public int getBramki() { return bramki; }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nBramkarz\nObrony: " + liczbaObron + "\nBramki: " + bramki;
-    }
 
     @Override
     public void odczytaj(String plik)
