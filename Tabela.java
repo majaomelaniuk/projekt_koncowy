@@ -68,6 +68,7 @@ class Czlowiek implements Serializable
 
 class Pilkarz extends Czlowiek {
     protected int numer;
+    protected int bramki = 0;
 
     public Pilkarz()
     {
@@ -81,6 +82,13 @@ class Pilkarz extends Czlowiek {
     }
 
     public int getNumer() { return numer; }
+
+    public void dodajBramke()
+    {
+        bramki++;
+    }
+
+    public int getBramki() { return this.bramki; }
 
     @Override
     public String toString() {
@@ -167,20 +175,11 @@ class Trener extends Czlowiek {
 
 class Napastnik extends Pilkarz {
 
-    private int bramki = 0;
-
     public Napastnik() { super(); }
 
     public Napastnik(String imie, String nazwisko, int numer) {
         super(imie, nazwisko, numer);
     }
-
-    public void dodajBramke()
-    {
-        bramki++;
-    }
-
-    public int getBramki() { return this.bramki; }
 
     @Override
     public void odczytaj(String plik)
@@ -263,7 +262,6 @@ class Kapitan extends Pilkarz {
 
 class Bramkarz extends Pilkarz {
     private int liczbaObron = 0;
-    private int bramki = 0;
 
     public Bramkarz() { super(); }
 
@@ -275,16 +273,9 @@ class Bramkarz extends Pilkarz {
         liczbaObron++;
     }
 
-    public void dodajBramke()
-    {
-        bramki++;
-    }
-
     public int getLiczbaObron() {
         return liczbaObron;
     }
-
-    public int getBramki() { return bramki; }
 
     @Override
     public void odczytaj(String plik)
@@ -582,9 +573,9 @@ class Druzyna implements Serializable
         this.pilkarze.add(pilkarz);
     }
 
-    public String getTrener()
+    public Trener getTrener()
     {
-        return trener.toString();
+        return trener;
     }
 
     public Kapitan getKapitan()
@@ -592,14 +583,9 @@ class Druzyna implements Serializable
         return kapitan;
     }
 
-    public String getPilkarze()
+    public List<Pilkarz> getPilkarze()
     {
-        String lista_pilkarzy = "";
-        for (Pilkarz pilkarz : this.pilkarze)
-        {
-            lista_pilkarzy += pilkarz.toString() + "\n";
-        }
-        return lista_pilkarzy;
+        return pilkarze;
     }
 
     @Override
