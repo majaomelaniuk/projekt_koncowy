@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import javax.imageio.ImageIO;
 
 class TabelaWidok extends JFrame {
@@ -41,10 +41,8 @@ class TabelaWidok extends JFrame {
         gorny_panel.setLayout(new BorderLayout());
         gorny_panel.setBackground(new Color(0, 100, 0));
 
-//---------------------- Obrazek ---------------------------------        
-
         try {
-            Image obrazek_pilki = ImageIO.read(new File("Soccer_ball.svg.png"));
+            Image obrazek_pilki = ImageIO.read(new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Soccer_ball.svg/440px-Soccer_ball.svg.png"));
             Image wyskalowany_obrazek_pilki = obrazek_pilki.getScaledInstance(90, 90, Image.SCALE_DEFAULT);
             ImageIcon ikonka_obrazka_pilki = new ImageIcon(wyskalowany_obrazek_pilki);
             JLabel obszar_obrazka_pilki = new JLabel(ikonka_obrazka_pilki);
@@ -54,8 +52,6 @@ class TabelaWidok extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//---------------------- Zakładki -------------------------------
 
         JPanel gorne_przyciski = new JPanel();
         gorne_przyciski.setLayout(new GridLayout(1, 2));
@@ -89,8 +85,6 @@ class TabelaWidok extends JFrame {
         });
 
         gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
-
-//--------------------- Dolne Przyciski ---------------------------
 
         JButton dodaj_druzyne = new JButton("Dodaj drużynę");
 
