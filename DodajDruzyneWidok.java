@@ -10,11 +10,13 @@ import java.util.ArrayList;
 class DodajDruzyneWidok extends JDialog {
     Tabela nowa_tabela;
     TabelaWidok nowa_tabela_widok;
-    
+    int licz_bramkarze = 0;
+    int licz_pilkarze = 0;
+
     public DodajDruzyneWidok(TabelaWidok widok, Tabela tabela) {
         nowa_tabela = tabela;
         nowa_tabela_widok = widok;
-    
+        
         setTitle("Dodaj drużynę");
         setSize(600, 500);
         getContentPane().setBackground(new Color(0, 100, 0));
@@ -234,12 +236,25 @@ class DodajDruzyneWidok extends JDialog {
                 if (bramkarzCheckBox.isSelected())
                 {
                     nowyZawodnik = new Bramkarz(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));
+                    licz_bramkarze += 1;
+                    licz_pilkarze += 1;
                 }
                 else
                 {
                     nowyZawodnik = new Napastnik(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));    
+                    licz_pilkarze += 1;
                 }
 
+                if (!kapitanNumerField.getText().isEmpty() && kapitanNumerField.getText().equals(zawodnikNumerField.getText())) {
+                    JOptionPane.showMessageDialog(null, "To jest numer kapitana", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                for(Pilkarz zawodnik : zawodnicy) {
+                    if(Integer.toString(zawodnik.getNumer()).equals(zawodnikNumerField.getText())) {
+                        JOptionPane.showMessageDialog(null, "Inny piłkarz już ma ten numer", "Błąd", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
                 zawodnicy.add(nowyZawodnik);
 
                 listaZawodnikowPanel.removeAll();
@@ -288,6 +303,18 @@ class DodajDruzyneWidok extends JDialog {
         dodajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if (licz_pilkarze == 0)
+                {
+                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if(licz_pilkarze < 11)
+                {
+                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 for (Druzyna druzyna : tabela.druzyny) {
                     if (nazwaField.getText().equals(druzyna.getNazwa())) {
                         JOptionPane.showMessageDialog(null, "Inna drużyna już ma tę nazwę!", "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -308,6 +335,7 @@ class DodajDruzyneWidok extends JDialog {
                 nowa_tabela.dodajDruzyne(nowa_druzyna);
                 
                 DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
+
 
                 widok.setPanelDruzyn(nowyWidok);
 
