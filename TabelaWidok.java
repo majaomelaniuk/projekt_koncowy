@@ -11,6 +11,8 @@ class TabelaWidok extends JFrame {
     CardLayout uklad_kart = new CardLayout();
     JPanel panel = new JPanel(uklad_kart);
     Tabela tabela;
+    JPanel panel_druzyn;
+    JPanel panel_meczy;
 
     TabelaWidok(Tabela tabela) {
         UIManager.put("TextField.selectionBackground", new Color(124, 252, 0));
@@ -27,8 +29,8 @@ class TabelaWidok extends JFrame {
         getContentPane().setBackground(new Color(0, 100, 0));
         this.tabela = tabela;
 
-        JPanel panel_druzyn = new DruzynyWidok(tabela);
-        JPanel panel_meczy = new MeczeWidok(tabela);
+        panel_druzyn = new DruzynyWidok(tabela);
+        panel_meczy = new MeczeWidok(tabela);
 
         panel.add(panel_druzyn, "Drużyny");
         panel.add(panel_meczy, "Mecze");
@@ -63,6 +65,8 @@ class TabelaWidok extends JFrame {
         druzyny.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                panel_druzyn = new DruzynyWidok(tabela);
+                panel.add(panel_druzyn, "Drużyny");
                 uklad_kart.show(panel, "Drużyny");
             }
         });
@@ -87,7 +91,7 @@ class TabelaWidok extends JFrame {
         dodaj_druzyne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DodajDruzyneWidok dodajD  = new DodajDruzyneWidok(tabela);
+                DodajDruzyneWidok dodajD  = new DodajDruzyneWidok(TabelaWidok.this, tabela);
                 TabelaWidok.this.tabela = dodajD.nowa();
                 
                 revalidate();
@@ -130,4 +134,20 @@ class TabelaWidok extends JFrame {
         pack();
         setVisible(true);
     }
+
+    public void setPanelDruzyn(DruzynyWidok nowyWidok) {
+        if (panel_druzyn != null) {
+            remove(panel_druzyn);
+        }
+
+        panel_druzyn = nowyWidok;
+
+        revalidate();
+        repaint();
+    }
+
+    public void setPanelMeczy(DruzynyWidok widok) {
+        panel_meczy = widok;
+    }
+
 }

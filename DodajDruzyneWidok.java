@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 class DodajDruzyneWidok extends JDialog {
     Tabela nowa_tabela;
+    TabelaWidok nowa_tabela_widok;
     
-    public DodajDruzyneWidok(Tabela tabela) {
+    public DodajDruzyneWidok(TabelaWidok widok, Tabela tabela) {
         nowa_tabela = tabela;
+        nowa_tabela_widok = widok;
     
         setTitle("Dodaj drużynę");
         setSize(600, 500);
@@ -304,6 +306,10 @@ class DodajDruzyneWidok extends JDialog {
                 }
 
                 nowa_tabela.dodajDruzyne(nowa_druzyna);
+                
+                DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
+
+                widok.setPanelDruzyn(nowyWidok);
 
                 dispose();
             }
