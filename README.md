@@ -80,27 +80,27 @@ Klasa reprezentująca kartkę w meczu. Przechowuje informacje o piłkarzu, kolor
 
 ## GUI Klasy
 
-### Main
+## Main
 
 Główna klasa GUI, która tworzy główne okno aplikacji z różnymi panelami do zarządzania statystykami meczów piłki nożnej.
 
-### DodajDruzyneWidok
+## DodajDruzyneWidok
 
 Klasa GUI do dodawania nowej drużyny. Umożliwia użytkownikowi wprowadzenie informacji o drużynie, trenerze, kapitanie oraz piłkarzach.
 
-### DodajMeczWidok
+## DodajMeczWidok
 
 Klasa GUI do dodawania nowego meczu. Umożliwia użytkownikowi wprowadzenie informacji o meczu, golach oraz kartkach.
 
-### TabelaWidok
+## TabelaWidok
 
 Klasa GUI do wyświetlania aktualnego rankingu drużyn. Prezentuje dotychczas zdobyte punkty, ilość rozegranych meczy, wygranych, remisów, przegranych oraz liczbę zdobytych i straconych bramek.
 
-### MeczeWidok
+## MeczeWidok
 
 Klasa GUI do wyświetlania listy meczów. Prezentuje dotychczas rozegrane mecze między drużynami wraz z wynikami.
 
-### MeczPodgladWidok
+## MeczPodgladWidok
 
 Klasa GUI do wyświetlania szczegółów pojedynczego meczu. Pokazuje informacje o golach i kartkach w meczu.
 
