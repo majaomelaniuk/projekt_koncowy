@@ -12,13 +12,13 @@ Projekt polega na stworzeniu aplikacji okienkowej w języku Java, która umożli
 - Java Development Kit (JDK) 8 lub nowszy
 - System operacyjny: Windows, macOS, Linux
 
-# KLASY
+## KLASY
 
-## Main
+### Main
 
 Punkt wejścia programu. Tworzy okno aplikacji i uruchamia główną logikę programu.
 
-## Tabela
+### Tabela
 
 Najważniejsza klasa projektu. Odpowiada za zarządzanie listą drużyn oraz meczów. Umożliwia dodawanie drużyn i meczów oraz aktualizację tabeli wyników.
 
@@ -26,7 +26,7 @@ Najważniejsza klasa projektu. Odpowiada za zarządzanie listą drużyn oraz mec
  - **dodajMecz** - Dodaje mecz do tabeli oraz aktualizuje tabelę wyników.
  - **aktualizujTabele** - Aktualizuje statystyki wszystkich drużyn na podstawie rozegranych meczów.
 
-## Druzyna
+### Druzyna
 
 Klasa reprezentująca drużynę piłkarską. Przechowuje informacje o nazwie drużyny, trenerze, kapitanie oraz piłkarzach.
 
@@ -34,73 +34,73 @@ Klasa reprezentująca drużynę piłkarską. Przechowuje informacje o nazwie dru
  - **dodajPilkarza** - Dodaje piłkarza do drużyny.
  - **resetujStatystyki** - Resetuje statystyki drużyny.
 
-## Mecz
+### Mecz
 
 Klasa reprezentująca mecz piłkarski. Przechowuje informacje o drużynach, golach i kartkach.
 
  - **dodajGol** - Dodaje gol do meczu.
  - **dodajKartke** - Dodaje kartkę do meczu.
 
-## Czlowiek
+### Czlowiek
 
 Klasa bazowa reprezentująca człowieka z imieniem i nazwiskiem. Dziedziczą po niej klasy Trener, Pilkarz i inne.
 
-## Pilkarz
+### Pilkarz
 
 Klasa reprezentująca piłkarza. Dziedziczy po klasie Czlowiek. Przechowuje numer zawodnika oraz liczbę zdobytych bramek.
 
  - **dodajBramke** - Dodaje bramkę do statystyk piłkarza.
 
-## Trener
+### Trener
 
 Klasa reprezentująca trenera. Dziedziczy po klasie Czlowiek. Przechowuje rok objęcia drużyny.
 
-## Kapitan
+### Kapitan
 
 Klasa reprezentująca kapitana drużyny. Dziedziczy po klasie Pilkarz. Przechowuje rok objęcia funkcji kapitana.
 
-## Napastnik
+### Napastnik
 
 Klasa reprezentująca napastnika. Dziedziczy po klasie Pilkarz.
 
-## Bramkarz
+### Bramkarz
 
 Klasa reprezentująca bramkarza. Dziedziczy po klasie Pilkarz. Przechowuje liczbę obron.
 
  - **dodajObrone** - Dodaje obronę do statystyk bramkarza.
 
-## Gol
+### Gol
 
 Klasa reprezentująca gol w meczu. Przechowuje informacje o strzelcu oraz minucie zdobycia gola.
 
-## Kartka
+### Kartka
 
 Klasa reprezentująca kartkę w meczu. Przechowuje informacje o piłkarzu, kolorze kartki, minucie oraz drużynie.
 
 
 ## GUI Klasy
 
-## Main
+### Main
 
 Główna klasa GUI, która tworzy główne okno aplikacji z różnymi panelami do zarządzania statystykami meczów piłki nożnej.
 
-## DodajDruzyneWidok
+### DodajDruzyneWidok
 
 Klasa GUI do dodawania nowej drużyny. Umożliwia użytkownikowi wprowadzenie informacji o drużynie, trenerze, kapitanie oraz piłkarzach.
 
-## DodajMeczWidok
+### DodajMeczWidok
 
 Klasa GUI do dodawania nowego meczu. Umożliwia użytkownikowi wprowadzenie informacji o meczu, golach oraz kartkach.
 
-## TabelaWidok
+### TabelaWidok
 
 Klasa GUI do wyświetlania aktualnego rankingu drużyn. Prezentuje dotychczas zdobyte punkty, ilość rozegranych meczy, wygranych, remisów, przegranych oraz liczbę zdobytych i straconych bramek.
 
-## MeczeWidok
+### MeczeWidok
 
 Klasa GUI do wyświetlania listy meczów. Prezentuje dotychczas rozegrane mecze między drużynami wraz z wynikami.
 
-## MeczPodgladWidok
+### MeczPodgladWidok
 
 Klasa GUI do wyświetlania szczegółów pojedynczego meczu. Pokazuje informacje o golach i kartkach w meczu.
 
