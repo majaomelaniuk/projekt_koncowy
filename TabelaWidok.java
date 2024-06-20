@@ -87,15 +87,11 @@ class TabelaWidok extends JFrame {
         gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
 
         JButton dodaj_druzyne = new JButton("Dodaj drużynę");
-        
+
         dodaj_druzyne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DodajDruzyneWidok dodajD  = new DodajDruzyneWidok(TabelaWidok.this, tabela);
-                TabelaWidok.this.tabela = dodajD.nowa();
-                
-                revalidate();
-                repaint();
+                new DodajDruzyneWidok(TabelaWidok.this, tabela);
             }
         });
 
@@ -110,7 +106,7 @@ class TabelaWidok extends JFrame {
 
         JPanel dolny_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         dolny_panel.setBackground(new Color(0, 100, 0));
-        dolny_panel.setForeground(Color.WHITE);        
+        dolny_panel.setForeground(Color.WHITE);
 
         dodaj_druzyne.setBackground(new Color(0, 100, 0));
         dodaj_druzyne.setForeground(Color.WHITE);
@@ -137,23 +133,23 @@ class TabelaWidok extends JFrame {
 
     public void setPanelDruzyn(DruzynyWidok nowyWidok) {
         if (panel_druzyn != null) {
-            remove(panel_druzyn);
+            panel.remove(panel_druzyn);
         }
         panel_druzyn = nowyWidok;
-
+        panel.add(panel_druzyn, "Drużyny");
+        uklad_kart.show(panel, "Drużyny");
         revalidate();
         repaint();
     }
 
     public void setPanelMeczy(MeczeWidok widok) {
         if (panel_meczy != null) {
-            remove(panel_meczy);
+            panel.remove(panel_meczy);
         }
-
         panel_meczy = widok;
-
+        panel.add(panel_meczy, "Mecze");
+        uklad_kart.show(panel, "Mecze");
         revalidate();
         repaint();
     }
-
 }
