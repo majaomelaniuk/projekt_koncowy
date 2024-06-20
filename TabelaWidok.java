@@ -12,7 +12,7 @@ class TabelaWidok extends JFrame {
     JPanel panel = new JPanel(uklad_kart);
     Tabela tabela;
     JPanel panel_druzyn;
-    JPanel panel_meczy;
+    MeczeWidok panel_meczy;
 
     TabelaWidok(Tabela tabela) {
         UIManager.put("TextField.selectionBackground", new Color(124, 252, 0));
@@ -29,6 +29,7 @@ class TabelaWidok extends JFrame {
         getContentPane().setBackground(new Color(0, 100, 0));
         this.tabela = tabela;
 
+
         panel_druzyn = new DruzynyWidok(tabela);
         panel_meczy = new MeczeWidok(tabela);
 
@@ -36,6 +37,7 @@ class TabelaWidok extends JFrame {
         panel.add(panel_meczy, "Mecze");
 
         uklad_kart.show(panel, "Drużyny");
+
 
         JPanel gorny_panel = new JPanel();
         gorny_panel.setLayout(new BorderLayout());
@@ -52,6 +54,7 @@ class TabelaWidok extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         JPanel gorne_przyciski = new JPanel();
         gorne_przyciski.setLayout(new GridLayout(1, 2));
@@ -86,31 +89,34 @@ class TabelaWidok extends JFrame {
 
         gorny_panel.add(gorne_przyciski, BorderLayout.SOUTH);
 
+
         JButton dodaj_druzyne = new JButton("Dodaj drużynę");
-        
+
         dodaj_druzyne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DodajDruzyneWidok dodajD  = new DodajDruzyneWidok(TabelaWidok.this, tabela);
+                DodajDruzyneWidok dodajD = new DodajDruzyneWidok(TabelaWidok.this, tabela);
                 TabelaWidok.this.tabela = dodajD.nowa();
-                
+
                 revalidate();
                 repaint();
             }
         });
+
 
         JButton dodaj_mecz = new JButton("Dodaj mecz");
 
         dodaj_mecz.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DodajMeczWidok(tabela);
+                new DodajMeczWidok(tabela, panel_meczy);
             }
         });
 
+
         JPanel dolny_panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         dolny_panel.setBackground(new Color(0, 100, 0));
-        dolny_panel.setForeground(Color.WHITE);        
+        dolny_panel.setForeground(Color.WHITE);
 
         dodaj_druzyne.setBackground(new Color(0, 100, 0));
         dodaj_druzyne.setForeground(Color.WHITE);
@@ -146,8 +152,14 @@ class TabelaWidok extends JFrame {
         repaint();
     }
 
-    public void setPanelMeczy(DruzynyWidok widok) {
-        panel_meczy = widok;
-    }
+    public void setPanelMeczy(MeczeWidok widok) {
+        if (panel_meczy != null) {
+            remove(panel_meczy);
+        }
 
+        panel_meczy = widok;
+
+        revalidate();
+        repaint();
+    }
 }
