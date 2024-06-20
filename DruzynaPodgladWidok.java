@@ -24,6 +24,7 @@ class DruzynaPodgladWidok extends JFrame {
 
         add(tytulPanel, BorderLayout.NORTH);
 
+//------------------- Info ---------------------------
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));

@@ -85,7 +85,7 @@ class Trener extends Czlowiek {
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + "\nObjecie trenerstwa: " + rok;
+        return imie + " " + nazwisko + "    (" + rok + ")";
     }
 
     @Override
@@ -191,7 +191,7 @@ class Kapitan extends Pilkarz {
 
     @Override
     public String toString() {
-        return super.toString() + "(" + rok + ")";
+        return super.toString() + "     (" + rok + ")";
     }
 
     @Override
@@ -208,43 +208,6 @@ class Kapitan extends Pilkarz {
             this.nazwisko = pom.nazwisko;
             this.numer = pom.numer;
             this.rok = pom.rok;
-
-            in.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-        }
-    }
-}
-
-class Napastnik extends Pilkarz {
-
-    public Napastnik() { super(); }
-
-    public Napastnik(String imie, String nazwisko, int numer) {
-        super(imie, nazwisko, numer);
-    }
-
-    @Override
-    public void odczytaj(String plik)
-    {
-        try
-        {
-            FileInputStream plikIn = new FileInputStream(plik);
-            ObjectInputStream in = new ObjectInputStream(plikIn);
-
-            Napastnik pom = (Napastnik) in.readObject();
-
-            this.imie = pom.imie;
-            this.nazwisko = pom.nazwisko;
-            this.numer = pom.numer;
-            this.bramki = pom.bramki;
 
             in.close();
         }
@@ -311,7 +274,6 @@ class Bramkarz extends Pilkarz {
     }
 }
 
-
 class Gol implements Serializable {
     private Pilkarz strzelec;
     private int minuta;
@@ -320,6 +282,7 @@ class Gol implements Serializable {
         this.strzelec = strzelec;
         this.minuta = minuta;
     }
+
     public Pilkarz getStrzelec() {
         return strzelec;
     }
@@ -738,15 +701,6 @@ public class Tabela implements Serializable
     public void dodajMecz(Mecz mecz) {
         mecze.add(mecz);
         sortujTabele();
-    }
-
-    private Druzyna znajdzDruzyne(String nazwa) {
-        for (Druzyna druzyna: druzyny) {
-            if (druzyna.getNazwa().equals(nazwa)) {
-                return druzyna;
-            }
-        }
-        return null;
     }
 
     public void sortujTabele() {

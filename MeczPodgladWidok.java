@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 
 class MeczPodgladWidok extends JDialog {
-    private Mecz mecz;
 
     MeczPodgladWidok(JFrame parent, Mecz mecz) {
         super(parent, "Podgląd Meczu", true);
-        this.mecz = mecz;
-
+        
         setSize(600, 400);
         setLocationRelativeTo(parent);
         getContentPane().setBackground(new Color(0, 100, 0));
         setLayout(new BorderLayout());
+
+//------------------- Wynik ---------------------------
 
         JLabel wynikLabel = new JLabel(mecz.getDruzyna1() + " " + mecz.getBramki1() + " - " + mecz.getBramki2() + " " + mecz.getDruzyna2(), SwingConstants.CENTER);
         wynikLabel.setFont(new Font("Arial", Font.BOLD, 24));
