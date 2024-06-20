@@ -85,7 +85,7 @@ class Trener extends Czlowiek {
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + "    (" + rok + ")";
+        return imie + " " + nazwisko + "\nObjecie trenerstwa: " + rok;
     }
 
     @Override
@@ -191,7 +191,7 @@ class Kapitan extends Pilkarz {
 
     @Override
     public String toString() {
-        return super.toString() + "     (" + rok + ")";
+        return super.toString() + "(" + rok + ")";
     }
 
     @Override
@@ -208,6 +208,43 @@ class Kapitan extends Pilkarz {
             this.nazwisko = pom.nazwisko;
             this.numer = pom.numer;
             this.rok = pom.rok;
+
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+        }
+    }
+}
+
+class Napastnik extends Pilkarz {
+
+    public Napastnik() { super(); }
+
+    public Napastnik(String imie, String nazwisko, int numer) {
+        super(imie, nazwisko, numer);
+    }
+
+    @Override
+    public void odczytaj(String plik)
+    {
+        try
+        {
+            FileInputStream plikIn = new FileInputStream(plik);
+            ObjectInputStream in = new ObjectInputStream(plikIn);
+
+            Napastnik pom = (Napastnik) in.readObject();
+
+            this.imie = pom.imie;
+            this.nazwisko = pom.nazwisko;
+            this.numer = pom.numer;
+            this.bramki = pom.bramki;
 
             in.close();
         }
@@ -274,7 +311,8 @@ class Bramkarz extends Pilkarz {
     }
 }
 
-class Gol implements Serializable {
+
+class Gol {
     private Pilkarz strzelec;
     private int minuta;
 
@@ -282,7 +320,6 @@ class Gol implements Serializable {
         this.strzelec = strzelec;
         this.minuta = minuta;
     }
-
     public Pilkarz getStrzelec() {
         return strzelec;
     }
@@ -295,41 +332,9 @@ class Gol implements Serializable {
     public String toString() {
         return strzelec + " w minucie " + minuta;
     }
-
-    public void zapisz(String plik) {
-        try {
-            FileOutputStream plikOut = new FileOutputStream(plik);
-            ObjectOutputStream out = new ObjectOutputStream(plikOut);
-
-            out.writeObject(this);
-            out.close();
-            System.out.println("Zapisano");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void odczytaj(String plik) {
-        try {
-            FileInputStream plikIn = new FileInputStream(plik);
-            ObjectInputStream in = new ObjectInputStream(plikIn);
-
-            Gol pom = (Gol) in.readObject();
-
-            this.strzelec = pom.strzelec;
-            this.minuta = pom.minuta;
-
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-        }
-    } 
 }
 
-class Kartka implements Serializable {
+class Kartka {
     private Pilkarz pilkarz;
     private String kolor;
     private int minuta;
@@ -361,40 +366,6 @@ class Kartka implements Serializable {
     @Override
     public String toString() {
         return kolor + " kartka dla " + pilkarz + " w minucie " + minuta;
-    }
-
-    public void zapisz(String plik) {
-        try {
-            FileOutputStream plikOut = new FileOutputStream(plik);
-            ObjectOutputStream out = new ObjectOutputStream(plikOut);
-
-            out.writeObject(this);
-            out.close();
-            System.out.println("Zapisano");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void odczytaj(String plik) {
-        try {
-            FileInputStream plikIn = new FileInputStream(plik);
-            ObjectInputStream in = new ObjectInputStream(plikIn);
-
-            Kartka pom = (Kartka) in.readObject();
-
-            this.pilkarz = pom.pilkarz;
-            this.kolor = pom.kolor;
-            this.minuta = pom.minuta;
-            this.druzyna = pom.druzyna;
-
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-        }
     }
 }
 
@@ -703,15 +674,6 @@ public class Tabela implements Serializable
         aktualizujTabele();
     }
 
-    private Druzyna znajdzDruzyne(String nazwa) {
-        for (Druzyna druzyna: druzyny) {
-            if (druzyna.getNazwa().equals(nazwa)) {
-                return druzyna;
-            }
-        }
-        return null;
-    }
-
     public void aktualizujTabele() {
         for (Druzyna druzyna : druzyny) {
             druzyna.resetujStatystyki();
@@ -742,6 +704,15 @@ public class Tabela implements Serializable
         }
 
         sortujTabele();
+    }
+
+    private Druzyna znajdzDruzyne(String nazwa) {
+        for (Druzyna druzyna: druzyny) {
+            if (druzyna.getNazwa().equals(nazwa)) {
+                return druzyna;
+            }
+        }
+        return null;
     }
 
     public void sortujTabele() {
@@ -776,7 +747,6 @@ public class Tabela implements Serializable
 
             out.writeObject(this);
             out.close();
-            plikOut.close();
             System.out.println("Zapisano");
         }
         catch (IOException e)
@@ -798,7 +768,6 @@ public class Tabela implements Serializable
             this.mecze = pom.mecze;
 
             in.close();
-            plikIn.close();
         }
         catch (IOException e)
         {
