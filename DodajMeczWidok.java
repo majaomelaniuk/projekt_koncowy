@@ -97,7 +97,7 @@ class DodajMeczWidok extends JDialog {
         label.setForeground(Color.WHITE);
         label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        Dimension squareSize = new Dimension(100, 250);
+        Dimension squareSize = new Dimension(100, 200);
         comboBox.setPreferredSize(squareSize);
         comboBox.setMaximumSize(squareSize);
         comboBox.setMinimumSize(squareSize);
