@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 class MeczeWidok extends JPanel {
     private Tabela tabela;
@@ -50,9 +52,15 @@ class MeczeWidok extends JPanel {
             JButton button = new JButton(buttonText);
             button.setBackground(new Color(0, 100, 0));
             button.setForeground(Color.WHITE);
-            button.setFont(new Font("Dialog", Font.BOLD, 16));
+            button.setFont(new Font("Dialog", Font.BOLD, 14));
             button.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
             button.setFocusPainted(false);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new MeczPodgladWidok((JFrame) SwingUtilities.getWindowAncestor(MeczeWidok.this), mecz);
+                }
+            });
 
             add(button);
         }

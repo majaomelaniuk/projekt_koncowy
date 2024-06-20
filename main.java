@@ -223,69 +223,13 @@ class Main extends JFrame {
                 tabela.dodajDruzyne(druzyna4);
                 tabela.dodajDruzyne(druzyna5);
                 tabela.dodajDruzyne(druzyna6);
+
                 Mecz mecz1 = new Mecz("WKS", "Legia");
-                mecz1.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz1.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
+                mecz1.dodajGol("WKS", new Pilkarz(" Erik", "Exposito ", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz("Artur", "Jędrzejczyk", 9), 25);
+                mecz1.dodajKartke(new Pilkarz(" Erik", "Exposito ", 10), "czerwona", 65, "WKS");
                 tabela.dodajMecz(mecz1);
 
-                Mecz mecz2 = new Mecz("Lech", "Jagiellonia");
-                mecz2.dodajGol("Lech", new Pilkarz(" ", " ", 11), 10);
-                mecz2.dodajGol("Lech", new Pilkarz(" ", " ", 11), 30);
-                mecz2.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 7), 45);
-                tabela.dodajMecz(mecz2);
-
-                Mecz mecz3 = new Mecz("WKS", "Lech");
-                mecz3.dodajKartke(new Pilkarz(" ", " ", 10), "czerwona", 30, "Lech");
-                mecz3.dodajGol("WKS", new Pilkarz(" ", " ", 10), 20);
-                mecz3.dodajGol("Lech", new Pilkarz(" ", " ", 11), 40);
-                tabela.dodajMecz(mecz3);
-
-                Mecz mecz4 = new Mecz("WKS", "Legia");
-                mecz4.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz4.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz4);
-
-                Mecz mecz5 = new Mecz("WKS", "Legia");
-                mecz5.dodajKartke(new Pilkarz(" ", " ", 10), "żółta", 30, "WKS");
-                mecz5.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz5.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz5);
-
-                Mecz mecz6 = new Mecz("WKS", "Legia");
-                mecz6.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz6.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz6);
-
-                Mecz mecz7 = new Mecz("WKS", "Widzew");
-                mecz7.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz7.dodajGol("Widzew", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz7);
-
-                Mecz mecz8 = new Mecz("Lech", "Jagiellonia");
-                mecz8.dodajGol("Lech", new Pilkarz(" ", " ", 11), 10);
-                mecz8.dodajGol("Lech", new Pilkarz(" ", " ", 11), 30);
-                mecz8.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 7), 45);
-                tabela.dodajMecz(mecz8);
-
-                Mecz mecz9 = new Mecz("WKS", "Lech");
-                mecz9.dodajKartke(new Pilkarz(" ", " ", 10), "czerwona", 30, "Lech");
-                mecz9.dodajGol("WKS", new Pilkarz(" ", " ", 10), 20);
-                mecz9.dodajGol("Lech", new Pilkarz(" ", " ", 11), 40);
-                tabela.dodajMecz(mecz9);
-
-                Mecz mecz10 = new Mecz("WKS", "Legia");
-                mecz10.dodajGol("WKS", new Pilkarz(" ", " ", 10), 15);
-                mecz10.dodajGol("Legia", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz10);
-
-                Mecz mecz11 = new Mecz("WKS", "Piast");
-                mecz11.dodajGol("Piast", new Pilkarz(" ", " ", 10), 15);
-                mecz11.dodajGol("WKS", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz11);
-
-                Mecz mecz12 = new Mecz("WKS", "Jagiellonia");
-                mecz12.dodajGol("Jagiellonia", new Pilkarz(" ", " ", 9), 25);
-                tabela.dodajMecz(mecz12);
 
                 tabela.aktualizujTabele();
                 TabelaWidok tabelaWidok = new TabelaWidok(tabela);
