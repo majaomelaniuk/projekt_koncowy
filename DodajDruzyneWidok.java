@@ -7,8 +7,12 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.ArrayList;
 
-class DodajDruzyneWidok extends JFrame {
+class DodajDruzyneWidok extends JDialog {
+    Tabela nowa_tabela;
+    
     public DodajDruzyneWidok(Tabela tabela) {
+        nowa_tabela = tabela;
+    
         setTitle("Dodaj drużynę");
         setSize(600, 500);
         getContentPane().setBackground(new Color(0, 100, 0));
@@ -243,6 +247,11 @@ class DodajDruzyneWidok extends JFrame {
                     listaZawodnikowPanel.add(label);
                 }
 
+                zawodnikImieField.setText("");
+                zawodnikNazwiskoField.setText("");
+                zawodnikNumerField.setText("");
+                bramkarzCheckBox.setSelected(false);
+        
                 revalidate();
                 repaint();
             }
@@ -263,7 +272,47 @@ class DodajDruzyneWidok extends JFrame {
 
         add(zawodnikPanel);
 
+//--------------- Dolny przycisk ----------------------------
+
+        JPanel dodajDruzynePanel = new JPanel(new FlowLayout());
+        dodajDruzynePanel.setBackground(new Color(0, 100, 0));
+
+        JButton dodajButton = new JButton("Dodaj drużynę");
+        
+        dodajDruzynePanel.add(dodajButton, BorderLayout.CENTER);
+
+        add(dodajDruzynePanel, BorderLayout.SOUTH);
+
+        dodajButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Druzyna druzyna : tabela.druzyny) {
+                    if (nazwaField.getText().equals(druzyna.getNazwa())) {
+                        JOptionPane.showMessageDialog(null, "Inna drużyna już ma tę nazwę!", "Błąd", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+
+                Druzyna nowa_druzyna = new Druzyna(nazwaField.getText());
+                nowa_druzyna.setTrener(new Trener(trenerImieField.getText(), trenerNazwiskoField.getText(), Integer.parseInt(trenerRokField.getText())));
+                nowa_druzyna.setKapitan(new Kapitan(kapitanImieField.getText(), kapitanNazwiskoField.getText(), Integer.parseInt(kapitanNumerField.getText()), Integer.parseInt(kapitanRokField.getText())));
+                
+                nowa_druzyna.dodajPilkarza(nowa_druzyna.getKapitan());
+                for (Pilkarz zawodnik : zawodnicy)
+                {
+                    nowa_druzyna.dodajPilkarza(zawodnik);
+                }
+
+                nowa_tabela.dodajDruzyne(nowa_druzyna);
+
+                dispose();
+            }
+        });
         setVisible(true);
     }
+
+    public Tabela nowa() {
+        return nowa_tabela;
+    } 
 }
 

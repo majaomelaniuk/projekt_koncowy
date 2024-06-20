@@ -587,9 +587,9 @@ class Druzyna implements Serializable
         return trener.toString();
     }
 
-    public String getKapitan()
+    public Kapitan getKapitan()
     {
-        return kapitan.toString();
+        return kapitan;
     }
 
     public String getPilkarze()

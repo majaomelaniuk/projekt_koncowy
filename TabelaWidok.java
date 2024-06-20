@@ -10,6 +10,7 @@ class TabelaWidok extends JFrame {
 
     CardLayout uklad_kart = new CardLayout();
     JPanel panel = new JPanel(uklad_kart);
+    Tabela tabela;
 
     TabelaWidok(Tabela tabela) {
         UIManager.put("TextField.selectionBackground", new Color(124, 252, 0));
@@ -24,6 +25,7 @@ class TabelaWidok extends JFrame {
 
         setTitle("Tabela drużyn");
         getContentPane().setBackground(new Color(0, 100, 0));
+        this.tabela = tabela;
 
         JPanel panel_druzyn = new DruzynyWidok(tabela);
         JPanel panel_meczy = new MeczeWidok(tabela);
@@ -85,7 +87,11 @@ class TabelaWidok extends JFrame {
         dodaj_druzyne.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new DodajDruzyneWidok(tabela);
+                DodajDruzyneWidok dodajD  = new DodajDruzyneWidok(tabela);
+                TabelaWidok.this.tabela = dodajD.nowa();
+                
+                revalidate();
+                repaint();
             }
         });
 
