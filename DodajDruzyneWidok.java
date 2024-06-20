@@ -324,7 +324,6 @@ class DodajDruzyneWidok extends JDialog {
                 DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
                 widok.setPanelDruzyn(nowyWidok);
                 nowa_tabela.zapisz("tabela.ser");
-
                 dispose();
             }
         });

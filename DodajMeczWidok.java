@@ -329,9 +329,9 @@ class DodajMeczWidok extends JDialog {
         }
 
         tabela.dodajMecz(mecz);
+        tabela.aktualizujTabele();
         meczeWidok.odswiez();
         tabela.zapisz("tabela.ser");
-        
         dispose();
     }
 }
