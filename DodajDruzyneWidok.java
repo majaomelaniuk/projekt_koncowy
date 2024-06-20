@@ -33,8 +33,6 @@ class DodajDruzyneWidok extends JDialog {
         JTextField zawodnikImieField = new JTextField();
         JTextField zawodnikNazwiskoField = new JTextField();
 
-//------------------- Tytul ----------------------------
-
         JPanel tytulPanel = new JPanel(new BorderLayout());
         tytulPanel.setBackground(new Color(0, 100, 0));
         tytulPanel.setPreferredSize(new Dimension(tytulPanel.getPreferredSize().width, 100));
@@ -43,8 +41,6 @@ class DodajDruzyneWidok extends JDialog {
         tytulLabel.setForeground(Color.WHITE);
         tytulPanel.add(tytulLabel, BorderLayout.CENTER);
         add(tytulPanel);
-
-//-------------------- Nazwa ----------------------------
 
         JPanel nazwaPanel = new JPanel(new BorderLayout());
         nazwaPanel.setBackground(new Color(0, 100, 0));
@@ -63,8 +59,6 @@ class DodajDruzyneWidok extends JDialog {
         max.height = 10;
         nazwaPanel.setMaximumSize(max);
         add(nazwaPanel);
-
-//---------------------- Trener ---------------------------
 
         JPanel trenerImiePanel = new JPanel(new BorderLayout());
         trenerImiePanel.setBackground(new Color(0, 100, 0));
@@ -104,8 +98,6 @@ class DodajDruzyneWidok extends JDialog {
         trenerPanel.setBackground(new Color(0, 100, 0));
         add(trenerPanel);
 
-//---------------------- Kapitan --------------------------- 
-        
         JPanel kapitanNumerPanel = new JPanel(new BorderLayout());
         kapitanNumerPanel.setBackground(new Color(0, 100, 0));
         JLabel kapitanNumerLabel = new JLabel("Nr", SwingConstants.CENTER);
@@ -153,8 +145,6 @@ class DodajDruzyneWidok extends JDialog {
         kapitanPanel.add(kapitanRokPanel);
         kapitanPanel.setForeground(Color.WHITE);
         add(kapitanPanel);
-
-//---------------------- Zawodnicy --------------------------
 
         JPanel zawodnikNumerPanel = new JPanel(new BorderLayout());
         zawodnikNumerPanel.setBackground(new Color(0, 100, 0));
@@ -222,8 +212,6 @@ class DodajDruzyneWidok extends JDialog {
         listaZawodnikowPanel.setForeground(Color.WHITE);
         listaZawodnikowPanel.setLayout(new BoxLayout(listaZawodnikowPanel, BoxLayout.Y_AXIS));
 
-//---------------------- Zawodnicy Przycisk------------------------------
-
         dodajZawodnikaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -234,7 +222,7 @@ class DodajDruzyneWidok extends JDialog {
                     licz_bramkarze += 1;
                     licz_pilkarze += 1;
                 } else {
-                    nowyZawodnik = new Pilkarz(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));
+                    nowyZawodnik = new Napastnik(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));
                     licz_pilkarze += 1;
                 }
 
@@ -294,15 +282,16 @@ class DodajDruzyneWidok extends JDialog {
         dodajButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (licz_bramkarze == 0) {
-                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
 
-                if (licz_pilkarze - licz_bramkarze < 10) {
-                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // if (licz_bramkarze == 0) {
+                //     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
+                //     return;
+                // }
+
+                // if (licz_pilkarze < 11) {
+                //     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
+                //     return;
+                // }
                 for (Druzyna druzyna : tabela.druzyny) {
                     if (nazwaField.getText().equals(druzyna.getNazwa())) {
                         JOptionPane.showMessageDialog(null, "Inna drużyna już ma tę nazwę!", "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -324,11 +313,15 @@ class DodajDruzyneWidok extends JDialog {
                 DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
                 widok.setPanelDruzyn(nowyWidok);
                 nowa_tabela.zapisz("tabela.ser");
+
                 dispose();
             }
         });
 
         setVisible(true);
     }
-}
 
+    public Tabela nowa() {
+        return nowa_tabela;
+    }
+}
