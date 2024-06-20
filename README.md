@@ -40,9 +40,6 @@ Klasa reprezentująca mecz piłkarski. Przechowuje informacje o drużynach, gola
 
 Klasa bazowa reprezentująca człowieka z imieniem i nazwiskiem. Dziedziczą po niej klasy Trener, Pilkarz i inne.
 
- - **zapisz** - Zapisuje obiekt do pliku.
- - **odczytaj** - Odczytuje obiekt z pliku.
-
 ## Pilkarz
 
 Klasa reprezentująca piłkarza. Dziedziczy po klasie Czlowiek. Przechowuje numer zawodnika oraz liczbę zdobytych bramek.
