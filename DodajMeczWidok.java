@@ -12,8 +12,7 @@ class DodajMeczWidok extends JDialog {
     private Tabela nowa_tabela;
     private MeczeWidok meczeWidok;
     private JComboBox<Druzyna> druzynyComboBox1, druzynyComboBox2;
-    private JTextField kolorKartkiField;
-    private JTextField pilkarzKartkiField, pilkarzGolField;
+    private JComboBox<Pilkarz> pilkarzKartkiComboBox, pilkarzGolComboBox, kolorKartkiComboBox;
     private JTextField minutaKartkiField, minutaGolaField;
     private DefaultTableModel modelGole, modelKartki;
     private JTable tabelaGole, tabelaKartki;
@@ -73,7 +72,13 @@ class DodajMeczWidok extends JDialog {
         dodajMeczButton.setBackground(new Color(0, 100, 0));
         dodajMeczButton.setForeground(Color.WHITE);
         dodajMeczButton.setFont(new Font("Dialog", Font.BOLD, 12));
-        dodajMeczButton.addActionListener(e -> addMatchToTable(tabela));
+        dodajMeczButton.addActionListener(e -> {
+            if (druzynyComboBox1.getSelectedItem().equals(druzynyComboBox2.getSelectedItem())) {
+                JOptionPane.showMessageDialog(null, "Drużyny nie mogą mieć tej samej nazwy.", "Błąd", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            addMatchToTable(tabela);
+        });
 
         dodajMeczPanel.add(dodajMeczButton);
         add(dodajMeczPanel, BorderLayout.SOUTH);
@@ -127,6 +132,10 @@ class DodajMeczWidok extends JDialog {
     }
 
     private JPanel createGoalPanel() {
+
+        DefaultComboBoxModel<Pilkarz> model = new DefaultComboBoxModel<Pilkarz>();
+        pilkarzGolComboBox = new JComboBox<Pilkarz>(model);
+
         JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
         panel.setBackground(new Color(0, 100, 0));
         TitledBorder tytul = BorderFactory.createTitledBorder("Dodaj Gola");
@@ -141,9 +150,17 @@ class DodajMeczWidok extends JDialog {
 
         JLabel playerLabel = new JLabel("Zawodnik:");
         playerLabel.setForeground(Color.WHITE);
-        pilkarzGolField = new JTextField(15);
+        druzynyComboBox1.addActionListener(e -> {
+            Druzyna selectedTeam = (Druzyna) druzynyComboBox1.getSelectedItem();
+        
+            model.removeAllElements();
+        
+            for (Pilkarz pilkarz : selectedTeam.getPilkarze()) {
+                model.addElement(pilkarz);
+            }
+        });
         panel.add(playerLabel);
-        panel.add(pilkarzGolField);
+        panel.add(pilkarzGolComboBox);
 
         dodajGolaButton = new JButton("Dodaj gola");
         dodajGolaButton.setBackground(new Color(0, 100, 0));
@@ -156,6 +173,12 @@ class DodajMeczWidok extends JDialog {
     }
 
     private JPanel createCardPanel() {
+
+        String[] kolory = {"żółta", "czerwona"};
+        
+        DefaultComboBoxModel<Pilkarz> model = new DefaultComboBoxModel<Pilkarz>();
+        pilkarzKartkiComboBox = new JComboBox<Pilkarz>(model);
+
         JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
         panel.setBackground(new Color(0, 100, 0));
         TitledBorder tytul = BorderFactory.createTitledBorder("Dodaj Kartkę");
@@ -170,15 +193,26 @@ class DodajMeczWidok extends JDialog {
 
         JLabel colorLabel = new JLabel("Kolor kartki:");
         colorLabel.setForeground(Color.WHITE);
-        kolorKartkiField = new JTextField(10);
+        kolorKartkiComboBox = new JComboBox(kolory);
         panel.add(colorLabel);
-        panel.add(kolorKartkiField);
+        panel.add(kolorKartkiComboBox);
 
         JLabel playerLabel = new JLabel("Zawodnik:");
         playerLabel.setForeground(Color.WHITE);
-        pilkarzKartkiField = new JTextField(15);
+        druzynyComboBox1.addActionListener(e -> {
+            Druzyna selectedTeam = (Druzyna) druzynyComboBox1.getSelectedItem();
+        
+            // Wyczyszczenie modelu
+            model.removeAllElements();
+        
+            // Dodanie piłkarzy do modelu
+            for (Pilkarz pilkarz : selectedTeam.getPilkarze()) {
+                model.addElement(pilkarz);
+            }
+        });
+        
         panel.add(playerLabel);
-        panel.add(pilkarzKartkiField);
+        panel.add(pilkarzKartkiComboBox);
 
         dodajKartkeButton = new JButton("Dodaj kartkę");
         dodajKartkeButton.setBackground(new Color(0, 100, 0));
@@ -248,7 +282,8 @@ class DodajMeczWidok extends JDialog {
 
     private void addGoal() {
         String minuta = minutaGolaField.getText();
-        String zawodnik = pilkarzGolField.getText();
+        Pilkarz zawodnik = (Pilkarz) pilkarzGolComboBox.getSelectedItem();
+        zawodnik.dodajBramke();
         Druzyna druzyna = (Druzyna) druzynyComboBox1.getSelectedItem();
         modelGole.addRow(new Object[]{minuta, zawodnik, druzyna.getNazwa()});
         System.out.println("Goal added: " + minuta + " minute by " + zawodnik + " for " + druzyna.getNazwa());
@@ -256,8 +291,8 @@ class DodajMeczWidok extends JDialog {
 
     private void addCard() {
         String minuta = minutaKartkiField.getText();
-        String kolor = kolorKartkiField.getText();
-        String zawodnik = pilkarzKartkiField.getText();
+        String kolor = (String) kolorKartkiComboBox.getSelectedItem();
+        Pilkarz zawodnik = (Pilkarz) pilkarzKartkiComboBox.getSelectedItem();
         Druzyna druzyna = (Druzyna) druzynyComboBox1.getSelectedItem();
         modelKartki.addRow(new Object[]{minuta, zawodnik, kolor, druzyna.getNazwa()});
         System.out.println("Card added: " + minuta + " minute, " + kolor + " card for " + zawodnik + " of " + druzyna.getNazwa());
