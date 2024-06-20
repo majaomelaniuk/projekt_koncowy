@@ -5,17 +5,29 @@ import java.awt.event.ActionListener;
 
 class MeczeWidok extends JPanel {
     private Tabela tabela;
+    private JPanel meczePanel;
 
     MeczeWidok(Tabela tabela) {
         this.tabela = tabela;
         setBackground(new Color(0, 100, 0));
-        setLayout(new GridLayout(0, 2, 10, 10));
+        setLayout(new BorderLayout());
+
+        meczePanel = new JPanel();
+        meczePanel.setLayout(new GridLayout(0, 2, 10, 10));
+        meczePanel.setBackground(new Color(0, 100, 0));
+
+        JScrollPane scrollPane = new JScrollPane(meczePanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        add(scrollPane, BorderLayout.CENTER);
+
         odswiez();
     }
 
     public void odswiez() {
-        removeAll();
-        setLayout(new GridLayout(0, 2, 10, 10));
+        meczePanel.removeAll();
+        meczePanel.setLayout(new GridLayout(0, 2, 10, 10));
 
         for (Mecz mecz : tabela.mecze) {
             StringBuilder buttonTextBuilder = new StringBuilder("<html><center>");
@@ -62,10 +74,10 @@ class MeczeWidok extends JPanel {
                 }
             });
 
-            add(button);
+            meczePanel.add(button);
         }
 
-        this.repaint();
-        this.revalidate();
+        meczePanel.repaint();
+        meczePanel.revalidate();
     }
 }
