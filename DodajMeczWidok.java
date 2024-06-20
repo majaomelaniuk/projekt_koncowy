@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -7,73 +8,109 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class DodajMeczWidok extends JFrame {
-    private JFrame okno;
+class DodajMeczWidok extends JDialog {
+    private Tabela nowa_tabela;
+    private MeczeWidok meczeWidok;
     private JComboBox<Druzyna> druzynyComboBox1, druzynyComboBox2;
     private JTextField kolorKartkiField;
     private JTextField pilkarzKartkiField, pilkarzGolField;
     private JTextField minutaKartkiField, minutaGolaField;
-    private JButton dodajGolaButton, dodajKartkeButton, dodajMeczButton;
     private DefaultTableModel modelGole, modelKartki;
     private JTable tabelaGole, tabelaKartki;
-    private MeczeWidok meczeWidok;
+    private JButton dodajGolaButton, dodajKartkeButton, dodajMeczButton;
 
     public DodajMeczWidok(Tabela tabela, MeczeWidok meczeWidok) {
+        this.nowa_tabela = tabela;
         this.meczeWidok = meczeWidok;
-        okno = new JFrame("Dodaj Mecz");
-        okno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        okno.setLayout(new BorderLayout(10, 10));
-        okno.getContentPane().setBackground(new Color(0, 100, 0));
+
+        setTitle("Dodaj Mecz");
+        setSize(800, 600);
+        setMinimumSize(new Dimension(800, 600));
+        getContentPane().setBackground(new Color(0, 100, 0));
+        getContentPane().setLayout(new BorderLayout(10, 10));
+
+        JPanel tytulPanel = new JPanel(new BorderLayout());
+        tytulPanel.setBackground(new Color(0, 100, 0));
+        tytulPanel.setPreferredSize(new Dimension(tytulPanel.getPreferredSize().width, 60));
+        JLabel tytulLabel = new JLabel("Nowy Mecz", SwingConstants.CENTER);
+        tytulLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        tytulLabel.setForeground(Color.WHITE);
+        tytulPanel.add(tytulLabel, BorderLayout.CENTER);
+        add(tytulPanel, BorderLayout.NORTH);
 
         JPanel panelDruzyn = new JPanel();
         panelDruzyn.setLayout(new GridLayout(1, 2, 10, 10));
         panelDruzyn.setBackground(new Color(0, 100, 0));
+        TitledBorder tytulDruzyny = BorderFactory.createTitledBorder("Wybierz drużyny");
+        tytulDruzyny.setTitleColor(Color.WHITE);
+        panelDruzyn.setBorder(tytulDruzyny);
 
-        JPanel panelDruzyna1 = createTeamPanel(tabela, druzynyComboBox1 = new JComboBox<>(), "Wybierz drużynę 1 (która zdobyła gola/kartkę):");
-        JPanel panelDruzyna2 = createTeamPanel(tabela, druzynyComboBox2 = new JComboBox<>(), "Wybierz drużynę 2:");
+
+        JPanel panelDruzyna1 = createTeamPanel(tabela, druzynyComboBox1 = new JComboBox<>(), "Drużyna 1 (gol/kartka):");
+        JPanel panelDruzyna2 = createTeamPanel(tabela, druzynyComboBox2 = new JComboBox<>(), "Drużyna 2:");
 
         panelDruzyn.add(panelDruzyna1);
         panelDruzyn.add(panelDruzyna2);
-        okno.add(panelDruzyn, BorderLayout.NORTH);
+        add(panelDruzyn, BorderLayout.WEST);
 
         JPanel panelZdarzenia = new JPanel();
         panelZdarzenia.setLayout(new GridLayout(3, 1, 10, 10));
+        panelZdarzenia.setBackground(new Color(0, 100, 0));
+        TitledBorder tytulZdarzenia = BorderFactory.createTitledBorder("Zdarzenia");
+        tytulZdarzenia.setTitleColor(Color.WHITE);
+        panelZdarzenia.setBorder(tytulZdarzenia);
+
         panelZdarzenia.add(createGoalPanel());
         panelZdarzenia.add(createCardPanel());
         panelZdarzenia.add(createSummaryPanel());
 
-        okno.add(panelZdarzenia, BorderLayout.CENTER);
+        add(panelZdarzenia, BorderLayout.CENTER);
+
+        JPanel dodajMeczPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        dodajMeczPanel.setBackground(new Color(0, 100, 0));
 
         dodajMeczButton = new JButton("Dodaj mecz");
+        dodajMeczButton.setBackground(new Color(0, 100, 0));
+        dodajMeczButton.setForeground(Color.WHITE);
+        dodajMeczButton.setFont(new Font("Dialog", Font.BOLD, 12));
         dodajMeczButton.addActionListener(e -> addMatchToTable(tabela));
 
-        okno.add(dodajMeczButton, BorderLayout.SOUTH);
+        dodajMeczPanel.add(dodajMeczButton);
+        add(dodajMeczPanel, BorderLayout.SOUTH);
 
-        okno.pack();
-        okno.setVisible(true);
+        setVisible(true);
     }
 
     private JPanel createTeamPanel(Tabela tabela, JComboBox<Druzyna> comboBox, String labelText) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(0, 100, 0));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
         for (Druzyna druzyna : tabela.druzyny) {
             comboBox.addItem(druzyna);
         }
         setupComboBoxRenderer(comboBox);
 
-        panel.add(createLabel(labelText));
-        panel.add(comboBox);
+        JLabel label = new JLabel(labelText);
+        label.setForeground(Color.WHITE);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+
+        Dimension squareSize = new Dimension(100, 250);
+        comboBox.setPreferredSize(squareSize);
+        comboBox.setMaximumSize(squareSize);
+        comboBox.setMinimumSize(squareSize);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        panel.add(label, gbc);
+
+        gbc.gridy = 1;
+        panel.add(comboBox, gbc);
 
         return panel;
-    }
-
-    private JLabel createLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        label.setForeground(Color.WHITE);
-        return label;
     }
 
     private void setupComboBoxRenderer(JComboBox<Druzyna> comboBox) {
@@ -90,58 +127,75 @@ class DodajMeczWidok extends JFrame {
     }
 
     private JPanel createGoalPanel() {
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(new Color(0, 150, 0));
+        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
+        panel.setBackground(new Color(0, 100, 0));
+        TitledBorder tytul = BorderFactory.createTitledBorder("Dodaj Gola");
+        tytul.setTitleColor(Color.WHITE);
+        panel.setBorder(tytul);
 
         JLabel minuteLabel = new JLabel("Minuta gola:");
+        minuteLabel.setForeground(Color.WHITE);
         minutaGolaField = new JTextField(5);
         panel.add(minuteLabel);
         panel.add(minutaGolaField);
 
         JLabel playerLabel = new JLabel("Zawodnik:");
+        playerLabel.setForeground(Color.WHITE);
         pilkarzGolField = new JTextField(15);
         panel.add(playerLabel);
         panel.add(pilkarzGolField);
 
         dodajGolaButton = new JButton("Dodaj gola");
+        dodajGolaButton.setBackground(new Color(0, 100, 0));
+        dodajGolaButton.setForeground(Color.WHITE);
         dodajGolaButton.addActionListener(e -> addGoal());
-
+        panel.add(new JLabel());
         panel.add(dodajGolaButton);
 
         return panel;
     }
 
     private JPanel createCardPanel() {
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.setBackground(new Color(0, 150, 0));
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
+        panel.setBackground(new Color(0, 100, 0));
+        TitledBorder tytul = BorderFactory.createTitledBorder("Dodaj Kartkę");
+        tytul.setTitleColor(Color.WHITE);
+        panel.setBorder(tytul);
 
         JLabel minuteLabel = new JLabel("Minuta kartki:");
+        minuteLabel.setForeground(Color.WHITE);
         minutaKartkiField = new JTextField(5);
         panel.add(minuteLabel);
         panel.add(minutaKartkiField);
 
         JLabel colorLabel = new JLabel("Kolor kartki:");
+        colorLabel.setForeground(Color.WHITE);
         kolorKartkiField = new JTextField(10);
         panel.add(colorLabel);
         panel.add(kolorKartkiField);
 
         JLabel playerLabel = new JLabel("Zawodnik:");
+        playerLabel.setForeground(Color.WHITE);
         pilkarzKartkiField = new JTextField(15);
         panel.add(playerLabel);
         panel.add(pilkarzKartkiField);
 
         dodajKartkeButton = new JButton("Dodaj kartkę");
+        dodajKartkeButton.setBackground(new Color(0, 100, 0));
+        dodajKartkeButton.setForeground(Color.WHITE);
         dodajKartkeButton.addActionListener(e -> addCard());
-
+        panel.add(new JLabel());
         panel.add(dodajKartkeButton);
 
         return panel;
     }
 
     private JPanel createSummaryPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(1, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(1, 2, 10, 10));
         panel.setBackground(new Color(0, 100, 0));
+        TitledBorder tytul = BorderFactory.createTitledBorder("Podsumowanie");
+        tytul.setTitleColor(Color.WHITE);
+        panel.setBorder(tytul);
 
         modelGole = new DefaultTableModel(new Object[]{"Minuta", "Zawodnik", "Drużyna"}, 0);
         tabelaGole = new JTable(modelGole) {
@@ -235,5 +289,6 @@ class DodajMeczWidok extends JFrame {
         tabela.dodajMecz(mecz);
         meczeWidok.odswiez();
         System.out.println("Match added: " + nazwaDruzyna1 + " vs " + nazwaDruzyna2);
+        dispose();
     }
 }
