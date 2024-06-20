@@ -66,6 +66,56 @@ class Czlowiek implements Serializable
     }
 }
 
+class Trener extends Czlowiek {
+
+    private int rok;
+
+    public Trener()
+    {
+        super();
+        this.rok = 0;
+    }
+
+    public Trener(String imie, String nazwisko, int rok) {
+        super(imie, nazwisko);
+        this.rok = rok;
+    }
+
+    public int getRok() { return this.rok; }
+
+    @Override
+    public String toString() {
+        return imie + " " + nazwisko + "\nObjecie trenerstwa: " + rok;
+    }
+
+    @Override
+    public void odczytaj(String plik)
+    {
+        try
+        {
+            FileInputStream plikIn = new FileInputStream(plik);
+            ObjectInputStream in = new ObjectInputStream(plikIn);
+
+            Trener pom = (Trener) in.readObject();
+
+            this.imie = pom.imie;
+            this.nazwisko = pom.nazwisko;
+            this.rok = pom.rok;
+
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+        }
+    }
+}
+
 class Pilkarz extends Czlowiek {
     protected int numer;
     protected int bramki = 0;
@@ -123,26 +173,25 @@ class Pilkarz extends Czlowiek {
     }
 }
 
-class Trener extends Czlowiek {
-
+class Kapitan extends Pilkarz {
     private int rok;
 
-    public Trener()
+    public Kapitan()
     {
         super();
-        this.rok = 0;
+        rok = 0;
     }
 
-    public Trener(String imie, String nazwisko, int rok) {
-        super(imie, nazwisko);
+    public Kapitan(String imie, String nazwisko, int numer, int rok) {
+        super(imie, nazwisko, numer);
         this.rok = rok;
     }
 
-    public int getRok() { return this.rok; }
+    public int getRok() { return rok; }
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + "\nObjecie trenerstwa: " + rok;
+        return super.toString() + "(" + rok + ")";
     }
 
     @Override
@@ -153,10 +202,11 @@ class Trener extends Czlowiek {
             FileInputStream plikIn = new FileInputStream(plik);
             ObjectInputStream in = new ObjectInputStream(plikIn);
 
-            Trener pom = (Trener) in.readObject();
+            Kapitan pom = (Kapitan) in.readObject();
 
             this.imie = pom.imie;
             this.nazwisko = pom.nazwisko;
+            this.numer = pom.numer;
             this.rok = pom.rok;
 
             in.close();
@@ -210,56 +260,6 @@ class Napastnik extends Pilkarz {
     }
 }
 
-class Kapitan extends Pilkarz {
-    private int rok;
-
-    public Kapitan()
-    {
-        super();
-        rok = 0;
-    }
-
-    public Kapitan(String imie, String nazwisko, int numer, int rok) {
-        super(imie, nazwisko, numer);
-        this.rok = rok;
-    }
-
-    public int getRok() { return rok; }
-
-    @Override
-    public String toString() {
-        return super.toString() + "\nKapitan od: " + rok;
-    }
-
-    @Override
-    public void odczytaj(String plik)
-    {
-        try
-        {
-            FileInputStream plikIn = new FileInputStream(plik);
-            ObjectInputStream in = new ObjectInputStream(plikIn);
-
-            Kapitan pom = (Kapitan) in.readObject();
-
-            this.imie = pom.imie;
-            this.nazwisko = pom.nazwisko;
-            this.numer = pom.numer;
-            this.rok = pom.rok;
-
-            in.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-        }
-    }
-}
-
 class Bramkarz extends Pilkarz {
     private int liczbaObron = 0;
 
@@ -275,6 +275,11 @@ class Bramkarz extends Pilkarz {
 
     public int getLiczbaObron() {
         return liczbaObron;
+    }
+
+    @Override
+    public String toString() {
+        return "(B) " + super.toString();
     }
 
     @Override
