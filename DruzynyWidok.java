@@ -42,14 +42,14 @@ class DruzynyWidok extends JPanel{
         ((DefaultTableCellRenderer) wiersze.getDefaultRenderer(Object.class)).setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
         wiersze.addMouseListener(new MouseAdapter() {
-             public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 int row = wiersze.rowAtPoint(e.getPoint());
                 if (row >= 0) {
                     new DruzynaPodgladWidok(tabela.druzyny.get(row));
                 }
             }
         });
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 1; i < wiersze.getColumnCount(); i++) {
@@ -112,9 +112,8 @@ class DruzynyWidok extends JPanel{
         przewijalne.setVerticalScrollBar(przewijak);
         przewijalne.getViewport().setBackground(new Color(0, 100, 0));
 
-        add(przewijalne);   
-
         this.repaint();
         this.revalidate();
+        add(przewijalne);
     }
 }
