@@ -312,7 +312,7 @@ class Bramkarz extends Pilkarz {
 }
 
 
-class Gol {
+class Gol implements Serializable {
     private Pilkarz strzelec;
     private int minuta;
 
@@ -332,9 +332,41 @@ class Gol {
     public String toString() {
         return strzelec + " w minucie " + minuta;
     }
+
+    public void zapisz(String plik) {
+        try {
+            FileOutputStream plikOut = new FileOutputStream(plik);
+            ObjectOutputStream out = new ObjectOutputStream(plikOut);
+
+            out.writeObject(this);
+            out.close();
+            System.out.println("Zapisano");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void odczytaj(String plik) {
+        try {
+            FileInputStream plikIn = new FileInputStream(plik);
+            ObjectInputStream in = new ObjectInputStream(plikIn);
+
+            Gol pom = (Gol) in.readObject();
+
+            this.strzelec = pom.strzelec;
+            this.minuta = pom.minuta;
+
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+        }
+    } 
 }
 
-class Kartka {
+class Kartka implements Serializable {
     private Pilkarz pilkarz;
     private String kolor;
     private int minuta;
@@ -366,6 +398,40 @@ class Kartka {
     @Override
     public String toString() {
         return kolor + " kartka dla " + pilkarz + " w minucie " + minuta;
+    }
+
+    public void zapisz(String plik) {
+        try {
+            FileOutputStream plikOut = new FileOutputStream(plik);
+            ObjectOutputStream out = new ObjectOutputStream(plikOut);
+
+            out.writeObject(this);
+            out.close();
+            System.out.println("Zapisano");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void odczytaj(String plik) {
+        try {
+            FileInputStream plikIn = new FileInputStream(plik);
+            ObjectInputStream in = new ObjectInputStream(plikIn);
+
+            Kartka pom = (Kartka) in.readObject();
+
+            this.pilkarz = pom.pilkarz;
+            this.kolor = pom.kolor;
+            this.minuta = pom.minuta;
+            this.druzyna = pom.druzyna;
+
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+        }
     }
 }
 
@@ -671,38 +737,6 @@ public class Tabela implements Serializable
 
     public void dodajMecz(Mecz mecz) {
         mecze.add(mecz);
-        aktualizujTabele();
-    }
-
-    public void aktualizujTabele() {
-        for (Druzyna druzyna : druzyny) {
-            druzyna.resetujStatystyki();
-        }
-
-        for (Mecz mecz : mecze) {
-            Druzyna druzyna1 = znajdzDruzyne(mecz.getDruzyna1());
-            Druzyna druzyna2 = znajdzDruzyne(mecz.getDruzyna2());
-
-            if (druzyna1 != null && druzyna2 != null) {
-                int bramki1 = mecz.getBramki1();
-                int bramki2 = mecz.getBramki2();
-
-                druzyna1.dodajMecz(bramki1, bramki2);
-                druzyna2.dodajMecz(bramki2, bramki1);
-
-                if (bramki1 > bramki2) {
-                    druzyna1.dodajWygrana();
-                    druzyna2.dodajPrzegrana();
-                } else if (bramki1<bramki2) {
-                    druzyna1.dodajPrzegrana();
-                    druzyna2.dodajWygrana();
-                } else {
-                    druzyna1.dodajRemis();
-                    druzyna2.dodajRemis();
-                }
-            }
-        }
-
         sortujTabele();
     }
 
@@ -747,6 +781,7 @@ public class Tabela implements Serializable
 
             out.writeObject(this);
             out.close();
+            plikOut.close();
             System.out.println("Zapisano");
         }
         catch (IOException e)
@@ -768,6 +803,7 @@ public class Tabela implements Serializable
             this.mecze = pom.mecze;
 
             in.close();
+            plikIn.close();
         }
         catch (IOException e)
         {

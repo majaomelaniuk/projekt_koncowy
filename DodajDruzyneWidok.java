@@ -283,15 +283,15 @@ class DodajDruzyneWidok extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (licz_pilkarze == 0) {
-                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // if (licz_bramkarze == 0) {
+                //     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
+                //     return;
+                // }
 
-                if (licz_pilkarze < 11) {
-                    JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+                // if (licz_pilkarze < 11) {
+                //     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
+                //     return;
+                // }
                 for (Druzyna druzyna : tabela.druzyny) {
                     if (nazwaField.getText().equals(druzyna.getNazwa())) {
                         JOptionPane.showMessageDialog(null, "Inna drużyna już ma tę nazwę!", "Błąd", JOptionPane.ERROR_MESSAGE);
@@ -312,6 +312,7 @@ class DodajDruzyneWidok extends JDialog {
 
                 DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
                 widok.setPanelDruzyn(nowyWidok);
+                nowa_tabela.zapisz("tabela.ser");
 
                 dispose();
             }

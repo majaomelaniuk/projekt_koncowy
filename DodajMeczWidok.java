@@ -5,14 +5,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 class DodajMeczWidok extends JDialog {
     private Tabela nowa_tabela;
     private MeczeWidok meczeWidok;
     private JComboBox<Druzyna> druzynyComboBox1, druzynyComboBox2;
-    private JComboBox<Pilkarz> pilkarzKartkiComboBox, pilkarzGolComboBox, kolorKartkiComboBox;
+    private JComboBox<Pilkarz> pilkarzKartkiComboBox, pilkarzGolComboBox;
+    private JComboBox<String> kolorKartkiComboBox;
     private JTextField minutaKartkiField, minutaGolaField;
     private DefaultTableModel modelGole, modelKartki;
     private JTable tabelaGole, tabelaKartki;
@@ -78,6 +77,7 @@ class DodajMeczWidok extends JDialog {
                 return;
             }
             addMatchToTable(tabela);
+            tabela.zapisz("tabela.ser");
         });
 
         dodajMeczPanel.add(dodajMeczButton);
@@ -305,25 +305,28 @@ class DodajMeczWidok extends JDialog {
         String nazwaDruzyna2 = druzyna2.getNazwa();
 
         Mecz mecz = new Mecz(nazwaDruzyna1, nazwaDruzyna2);
+
         for (int i = 0; i < modelGole.getRowCount(); i++) {
             String minuta = (String) modelGole.getValueAt(i, 0);
-            String zawodnik = (String) modelGole.getValueAt(i, 1);
+            Pilkarz zawodnik = (Pilkarz) modelGole.getValueAt(i, 1);
             String nazwaDruzyny = (String) modelGole.getValueAt(i, 2);
-            Pilkarz pilkarz = new Pilkarz(zawodnik, "", 0);
-            mecz.dodajGol(nazwaDruzyny, pilkarz, Integer.parseInt(minuta));
+            mecz.dodajGol(nazwaDruzyny, zawodnik, Integer.parseInt(minuta));
+            System.out.println("Adding card " + i + ": " + minuta + ", " + zawodnik + ", " + nazwaDruzyny);
         }
+
         for (int i = 0; i < modelKartki.getRowCount(); i++) {
             String minuta = (String) modelKartki.getValueAt(i, 0);
-            String zawodnik = (String) modelKartki.getValueAt(i, 1);
+            Pilkarz zawodnik = (Pilkarz) modelKartki.getValueAt(i, 1);
             String kolor = (String) modelKartki.getValueAt(i, 2);
             String nazwaDruzyny = (String) modelKartki.getValueAt(i, 3);
-            Pilkarz pilkarz = new Pilkarz(zawodnik, "", 0);
-            mecz.dodajKartke(pilkarz, kolor, Integer.parseInt(minuta), nazwaDruzyny);
+            System.out.println("Adding card " + i + ": " + minuta + ", " + zawodnik + ", " + kolor + ", " + nazwaDruzyny);
+            mecz.dodajKartke(zawodnik, kolor, Integer.parseInt(minuta), nazwaDruzyny);
         }
 
         tabela.dodajMecz(mecz);
         meczeWidok.odswiez();
         System.out.println("Match added: " + nazwaDruzyna1 + " vs " + nazwaDruzyna2);
+        tabela.zapisz("tabela.ser");
         dispose();
     }
 }
