@@ -700,7 +700,7 @@ public class Tabela implements Serializable
 
     public void dodajMecz(Mecz mecz) {
         mecze.add(mecz);
-        sortujTabele();
+        aktualizujTabele();
     }
 
     private Druzyna znajdzDruzyne(String nazwa) {
@@ -711,7 +711,7 @@ public class Tabela implements Serializable
         }
         return null;
     }
-    
+
     public void aktualizujTabele() {
         for (Druzyna druzyna : druzyny) {
             druzyna.resetujStatystyki();
