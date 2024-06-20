@@ -2,8 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 
 class MeczeWidok extends JPanel {
+    private Tabela tabela;
+
     MeczeWidok(Tabela tabela) {
+        this.tabela = tabela;
         setBackground(new Color(0, 100, 0));
+        setLayout(new GridLayout(0, 2, 10, 10));
+        odswiez();
+    }
+
+    public void odswiez() {
+        removeAll();
         setLayout(new GridLayout(0, 2, 10, 10));
 
         for (Mecz mecz : tabela.mecze) {
@@ -46,9 +55,9 @@ class MeczeWidok extends JPanel {
             button.setFocusPainted(false);
 
             add(button);
-
-            this.repaint();
-            this.revalidate();
         }
+
+        this.repaint();
+        this.revalidate();
     }
 }
