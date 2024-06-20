@@ -703,6 +703,47 @@ public class Tabela implements Serializable
         sortujTabele();
     }
 
+    private Druzyna znajdzDruzyne(String nazwa) {
+        for (Druzyna druzyna: druzyny) {
+            if (druzyna.getNazwa().equals(nazwa)) {
+                return druzyna;
+            }
+        }
+        return null;
+    }
+    
+    public void aktualizujTabele() {
+        for (Druzyna druzyna : druzyny) {
+            druzyna.resetujStatystyki();
+        }
+
+        for (Mecz mecz : mecze) {
+            Druzyna druzyna1 = znajdzDruzyne(mecz.getDruzyna1());
+            Druzyna druzyna2 = znajdzDruzyne(mecz.getDruzyna2());
+
+            if (druzyna1 != null && druzyna2 != null) {
+                int bramki1 = mecz.getBramki1();
+                int bramki2 = mecz.getBramki2();
+
+                druzyna1.dodajMecz(bramki1, bramki2);
+                druzyna2.dodajMecz(bramki2, bramki1);
+
+                if (bramki1 > bramki2) {
+                    druzyna1.dodajWygrana();
+                    druzyna2.dodajPrzegrana();
+                } else if (bramki1<bramki2) {
+                    druzyna1.dodajPrzegrana();
+                    druzyna2.dodajWygrana();
+                } else {
+                    druzyna1.dodajRemis();
+                    druzyna2.dodajRemis();
+                }
+            }
+        }
+
+        sortujTabele();
+    }
+
     public void sortujTabele() {
         Collections.sort(druzyny, new Comparator<Druzyna>() {
             @Override

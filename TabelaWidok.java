@@ -2,8 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import javax.imageio.ImageIO;
 
 class TabelaWidok extends JFrame {
@@ -44,7 +44,7 @@ class TabelaWidok extends JFrame {
 //---------------------- Obrazek ---------------------------------        
 
         try {
-            Image obrazek_pilki = ImageIO.read(new URL("Soccer_ball.svg.png"));
+            Image obrazek_pilki = ImageIO.read(new File("Soccer_ball.svg.png"));
             Image wyskalowany_obrazek_pilki = obrazek_pilki.getScaledInstance(90, 90, Image.SCALE_DEFAULT);
             ImageIcon ikonka_obrazka_pilki = new ImageIcon(wyskalowany_obrazek_pilki);
             JLabel obszar_obrazka_pilki = new JLabel(ikonka_obrazka_pilki);
