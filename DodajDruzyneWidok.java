@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,7 @@ class DodajDruzyneWidok extends JDialog {
     public DodajDruzyneWidok(TabelaWidok widok, Tabela tabela) {
         nowa_tabela = tabela;
         nowa_tabela_widok = widok;
-        
+
         setTitle("Dodaj drużynę");
         setSize(600, 500);
         getContentPane().setBackground(new Color(0, 100, 0));
@@ -34,20 +33,15 @@ class DodajDruzyneWidok extends JDialog {
         JTextField zawodnikImieField = new JTextField();
         JTextField zawodnikNazwiskoField = new JTextField();
 
-//------------------- Tytul -----------------------------
-
         JPanel tytulPanel = new JPanel(new BorderLayout());
         tytulPanel.setBackground(new Color(0, 100, 0));
-        tytulPanel.setPreferredSize(new Dimension(tytulPanel.getPreferredSize().width, 100));        
+        tytulPanel.setPreferredSize(new Dimension(tytulPanel.getPreferredSize().width, 100));
         JLabel tytulLabel = new JLabel("Nowa drużyna", SwingConstants.CENTER);
         tytulLabel.setFont(new Font("Arial", Font.BOLD, 24));
         tytulLabel.setForeground(Color.WHITE);
         tytulPanel.add(tytulLabel, BorderLayout.CENTER);
-
         add(tytulPanel);
 
-//------------------ Nazwa -------------------------------
-        
         JPanel nazwaPanel = new JPanel(new BorderLayout());
         nazwaPanel.setBackground(new Color(0, 100, 0));
         TitledBorder tytul = BorderFactory.createTitledBorder("Nazwa");
@@ -59,17 +53,13 @@ class DodajDruzyneWidok extends JDialog {
         nazwaField.setColumns(30);
         nazwaField.setHorizontalAlignment(JTextField.CENTER);
         textFieldPanel.add(nazwaField);
-
         nazwaPanel.add(textFieldPanel, BorderLayout.CENTER);
 
         Dimension max = nazwaPanel.getMaximumSize();
         max.height = 10;
         nazwaPanel.setMaximumSize(max);
-
         add(nazwaPanel);
 
-//-------------------- Trener ----------------------------
-        
         JPanel trenerImiePanel = new JPanel(new BorderLayout());
         trenerImiePanel.setBackground(new Color(0, 100, 0));
         JLabel trenerImieLabel = new JLabel("Imię", SwingConstants.CENTER);
@@ -106,10 +96,7 @@ class DodajDruzyneWidok extends JDialog {
         trenerPanel.add(trenerRokPanel);
         trenerPanel.setForeground(Color.WHITE);
         trenerPanel.setBackground(new Color(0, 100, 0));
-        
         add(trenerPanel);
-        
-//----------------- Kapitan ---------------------
 
         JPanel kapitanNumerPanel = new JPanel(new BorderLayout());
         kapitanNumerPanel.setBackground(new Color(0, 100, 0));
@@ -157,10 +144,7 @@ class DodajDruzyneWidok extends JDialog {
         kapitanPanel.add(kapitanNazwiskoPanel);
         kapitanPanel.add(kapitanRokPanel);
         kapitanPanel.setForeground(Color.WHITE);
-
         add(kapitanPanel);
-
-//--------------- Zawodnicy -------------
 
         JPanel zawodnikNumerPanel = new JPanel(new BorderLayout());
         zawodnikNumerPanel.setBackground(new Color(0, 100, 0));
@@ -213,16 +197,16 @@ class DodajDruzyneWidok extends JDialog {
         polaPanel.add(zawodnikImiePanel);
         polaPanel.add(zawodnikNazwiskoPanel);
         polaPanel.add(bramkarzPanel);
-        
+
         JButton dodajZawodnikaButton = new JButton("Dodaj piłkarza");
-        
+
         JPanel przyciskPanel = new JPanel(new FlowLayout());
         przyciskPanel.setBackground(new Color(0, 100, 0));
         przyciskPanel.add(Box.createVerticalGlue());
         przyciskPanel.add(dodajZawodnikaButton);
 
         List<Pilkarz> zawodnicy = new ArrayList<>();
-        
+
         JPanel listaZawodnikowPanel = new JPanel();
         listaZawodnikowPanel.setBackground(new Color(0, 100, 0));
         listaZawodnikowPanel.setForeground(Color.WHITE);
@@ -232,16 +216,13 @@ class DodajDruzyneWidok extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Pilkarz nowyZawodnik;
-                
-                if (bramkarzCheckBox.isSelected())
-                {
+
+                if (bramkarzCheckBox.isSelected()) {
                     nowyZawodnik = new Bramkarz(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));
                     licz_bramkarze += 1;
                     licz_pilkarze += 1;
-                }
-                else
-                {
-                    nowyZawodnik = new Napastnik(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));    
+                } else {
+                    nowyZawodnik = new Napastnik(zawodnikImieField.getText(), zawodnikNazwiskoField.getText(), Integer.parseInt(zawodnikNumerField.getText()));
                     licz_pilkarze += 1;
                 }
 
@@ -249,8 +230,8 @@ class DodajDruzyneWidok extends JDialog {
                     JOptionPane.showMessageDialog(null, "To jest numer kapitana", "Błąd", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                for(Pilkarz zawodnik : zawodnicy) {
-                    if(Integer.toString(zawodnik.getNumer()).equals(zawodnikNumerField.getText())) {
+                for (Pilkarz zawodnik : zawodnicy) {
+                    if (Integer.toString(zawodnik.getNumer()).equals(zawodnikNumerField.getText())) {
                         JOptionPane.showMessageDialog(null, "Inny piłkarz już ma ten numer", "Błąd", JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -260,7 +241,7 @@ class DodajDruzyneWidok extends JDialog {
                 listaZawodnikowPanel.removeAll();
                 for (Pilkarz zawodnik : zawodnicy) {
                     JLabel label = new JLabel(zawodnik.toString());
-                    label.setForeground(Color.WHITE); 
+                    label.setForeground(Color.WHITE);
                     listaZawodnikowPanel.add(label);
                 }
 
@@ -268,7 +249,7 @@ class DodajDruzyneWidok extends JDialog {
                 zawodnikNazwiskoField.setText("");
                 zawodnikNumerField.setText("");
                 bramkarzCheckBox.setSelected(false);
-        
+
                 revalidate();
                 repaint();
             }
@@ -277,7 +258,7 @@ class DodajDruzyneWidok extends JDialog {
         JPanel goraPanel = new JPanel(new BorderLayout());
         goraPanel.add(polaPanel, BorderLayout.CENTER);
         goraPanel.add(przyciskPanel, BorderLayout.EAST);
-        
+
         JScrollPane scrollPaneZawodnicy = new JScrollPane(listaZawodnikowPanel);
         scrollPaneZawodnicy.getViewport().setBackground(new Color(0, 100, 0));
         scrollPaneZawodnicy.getVerticalScrollBar().setBackground(new Color(0, 100, 0));
@@ -289,13 +270,11 @@ class DodajDruzyneWidok extends JDialog {
 
         add(zawodnikPanel);
 
-//--------------- Dolny przycisk ----------------------------
-
         JPanel dodajDruzynePanel = new JPanel(new FlowLayout());
         dodajDruzynePanel.setBackground(new Color(0, 100, 0));
 
         JButton dodajButton = new JButton("Dodaj drużynę");
-        
+
         dodajDruzynePanel.add(dodajButton, BorderLayout.CENTER);
 
         add(dodajDruzynePanel, BorderLayout.SOUTH);
@@ -304,14 +283,12 @@ class DodajDruzyneWidok extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (licz_pilkarze == 0)
-                {
+                if (licz_pilkarze == 0) {
                     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej jeden bramkarz", "Błąd", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
-                if(licz_pilkarze < 11)
-                {
+                if (licz_pilkarze < 11) {
                     JOptionPane.showMessageDialog(null, "W drużynie musi być przynajmniej 11 zawodników", "Błąd", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
@@ -325,28 +302,26 @@ class DodajDruzyneWidok extends JDialog {
                 Druzyna nowa_druzyna = new Druzyna(nazwaField.getText());
                 nowa_druzyna.setTrener(new Trener(trenerImieField.getText(), trenerNazwiskoField.getText(), Integer.parseInt(trenerRokField.getText())));
                 nowa_druzyna.setKapitan(new Kapitan(kapitanImieField.getText(), kapitanNazwiskoField.getText(), Integer.parseInt(kapitanNumerField.getText()), Integer.parseInt(kapitanRokField.getText())));
-                
+
                 nowa_druzyna.dodajPilkarza(nowa_druzyna.getKapitan());
-                for (Pilkarz zawodnik : zawodnicy)
-                {
+                for (Pilkarz zawodnik : zawodnicy) {
                     nowa_druzyna.dodajPilkarza(zawodnik);
                 }
 
                 nowa_tabela.dodajDruzyne(nowa_druzyna);
-                
+
                 DruzynyWidok nowyWidok = new DruzynyWidok(nowa_tabela);
-
-
                 widok.setPanelDruzyn(nowyWidok);
 
                 dispose();
             }
         });
+
         setVisible(true);
     }
 
     public Tabela nowa() {
         return nowa_tabela;
-    } 
+    }
 }
 
