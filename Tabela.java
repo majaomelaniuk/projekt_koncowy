@@ -315,13 +315,17 @@ class Bramkarz extends Pilkarz {
 class Gol {
     private Pilkarz strzelec;
     private int minuta;
-    
+
     public Gol(Pilkarz strzelec, int minuta) {
         this.strzelec = strzelec;
         this.minuta = minuta;
     }
     public Pilkarz getStrzelec() {
         return strzelec;
+    }
+
+    public int getMinuta() {
+        return minuta;
     }
 
     @Override
@@ -412,6 +416,10 @@ class Mecz implements Serializable {
 
     public int getBramki2() {
         return bramki2;
+    }
+
+    public List<Gol> getGole() {
+        return gole;
     }
 
     public List<Kartka> getKartki() {
