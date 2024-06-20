@@ -90,17 +90,17 @@ Klasa GUI do dodawania nowej drużyny. Umożliwia użytkownikowi wprowadzenie in
 
 Klasa GUI do dodawania nowego meczu. Umożliwia użytkownikowi wprowadzenie informacji o meczu, golach oraz kartkach.
 
+### TabelaWidok
+
+Klasa GUI do wyświetlania aktualnego rankingu drużyn. Prezentuje dotychczas zdobyte punkty, ilość rozegranych meczy, wygranych, remisów, przegranych oraz liczbę zdobytych i straconych bramek.
+
 ### MeczeWidok
 
-Klasa GUI do wyświetlania listy meczów. Umożliwia użytkownikowi przeglądanie szczegółów meczów.
+Klasa GUI do wyświetlania listy meczów. Prezentuje dotychczas rozegrane mecze między drużynami wraz z wynikami.
 
 ### MeczPodgladWidok
 
 Klasa GUI do wyświetlania szczegółów pojedynczego meczu. Pokazuje informacje o golach i kartkach w meczu.
-
-### DruzynyWidok
-
-Klasa GUI do wyświetlania listy drużyn. Umożliwia użytkownikowi przeglądanie szczegółów drużyn, takich jak piłkarze, trener i kapitan.
 
 ### DruzynaPodgladWidok
 
