@@ -1,9 +1,12 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 class DruzynyWidok extends JPanel{
 
@@ -25,11 +28,28 @@ class DruzynyWidok extends JPanel{
             dane[i][7] = d.getBramkiStracone();
         }
 
-        JTable wiersze = new JTable(dane, nazwy_kolumn);
+
+        DefaultTableModel model = new DefaultTableModel(dane, nazwy_kolumn) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        JTable wiersze = new JTable(model);
         wiersze.setRowHeight(30);
         wiersze.setShowVerticalLines(false);
         ((DefaultTableCellRenderer) wiersze.getDefaultRenderer(Object.class)).setBorder(BorderFactory.createLineBorder(Color.WHITE));
 
+        wiersze.addMouseListener(new MouseAdapter() {
+             public void mouseClicked(MouseEvent e) {
+                int row = wiersze.rowAtPoint(e.getPoint());
+                if (row >= 0) {
+                    new DruzynaPodgladWidok(tabela.druzyny.get(row));
+                }
+            }
+        });
+        
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 1; i < wiersze.getColumnCount(); i++) {

@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 
 class DruzynaPodgladWidok extends JFrame {
@@ -7,6 +9,9 @@ class DruzynaPodgladWidok extends JFrame {
 
         setTitle("Drużyna");
         getContentPane().setBackground(new Color(0, 100, 0));
+        setSize(500, 500);
+        setLayout(new BorderLayout());
+
 
 //------------------ Nazwa --------------------------
 
@@ -18,33 +23,30 @@ class DruzynaPodgladWidok extends JFrame {
         tytulLabel.setForeground(Color.WHITE);
         tytulPanel.add(tytulLabel);
 
-        add(tytulPanel);
+        add(tytulPanel, BorderLayout.NORTH);
 
-//------------------ Trener ----------------------------
 
-        JPanel trenerPanel = new JPanel(new BorderLayout());
-        trenerPanel.setBackground(new Color(0, 100, 0));
-        trenerPanel.setForeground(Color.WHITE);
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setBackground(new Color(0, 100, 0));
+        infoPanel.setForeground(Color.WHITE);
+        infoPanel.setPreferredSize(new Dimension(200, 100));
+        
         JLabel trenerLabel = new JLabel("Trener: " + druzyna.getTrener().toString());
-        trenerPanel.add(trenerLabel);
+        trenerLabel.setForeground(Color.WHITE);
+        infoPanel.add(trenerLabel);
+        infoPanel.add(Box.createVerticalStrut(10));
+        
+        JLabel kapitanLabel = new JLabel("Kapitan: " + druzyna.getKapitan().toString() + "   Bramki: " + druzyna.getKapitan().getBramki());
+        kapitanLabel.setForeground(Color.WHITE);
+        infoPanel.add(kapitanLabel);
+        infoPanel.add(Box.createVerticalStrut(10));
 
-        add(trenerPanel);
 
-//------------------ Kapitan ----------------------------
-
-        JPanel kapitanPanel = new JPanel(new BorderLayout());
-        kapitanPanel.setBackground(new Color(0, 100, 0));
-        kapitanPanel.setForeground(Color.WHITE);
-        JLabel kapitJLabel = new JLabel("Kapitan: " + druzyna.getKapitan().toString() + "   Bramki: " + druzyna.getKapitan().getBramki());
-        kapitanPanel.add(kapitJLabel);
-
-        add(kapitanPanel);
-
-//----------------- Pilkarze -----------------------------
-
-        JPanel pilkarzePanel = new JPanel(new BorderLayout());
+        JPanel pilkarzePanel = new JPanel();
         pilkarzePanel.setBackground(new Color(0, 100, 0));
         pilkarzePanel.setForeground(Color.WHITE);
+        pilkarzePanel.setLayout(new BoxLayout(pilkarzePanel, BoxLayout.Y_AXIS));
 
         for (Pilkarz pilkarz : druzyna.getPilkarze()) {
             String pilkarzInfo = pilkarz.toString();
@@ -54,12 +56,18 @@ class DruzynaPodgladWidok extends JFrame {
                 pilkarzInfo += "   Bramki: " + pilkarz.getBramki();
             }
             JLabel pilkarzLabel = new JLabel(pilkarzInfo);
+            pilkarzLabel.setForeground(Color.WHITE);
             pilkarzePanel.add(pilkarzLabel);
         }
 
-        add(pilkarzePanel);
+        JScrollPane scrollPane = new JScrollPane(pilkarzePanel);
+        scrollPane.getViewport().setBackground(new Color(0, 100, 0));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
-        pack();
+        infoPanel.add(scrollPane);
+
+        add(infoPanel, BorderLayout.CENTER);
+
         setVisible(true);
     }
 }
