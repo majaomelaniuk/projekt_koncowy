@@ -74,12 +74,6 @@ Klasa reprezentująca gol w meczu. Przechowuje informacje o strzelcu oraz minuci
 
 Klasa reprezentująca kartkę w meczu. Przechowuje informacje o piłkarzu, kolorze kartki, minucie oraz drużynie.
 
-## TabelaManager
-
-Klasa odpowiadająca za zapisywanie i odczytywanie tabeli z/do pliku.
-
- - **zapiszDoPliku** - Zapisuje tabelę do pliku.
- - **odczytajZPliku** - Odczytuje tabelę z pliku.
 
 ## GUI Klasy
 
