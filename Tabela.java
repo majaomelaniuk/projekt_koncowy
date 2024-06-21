@@ -66,55 +66,6 @@ class Czlowiek implements Serializable
     }
 }
 
-class Pilkarz extends Czlowiek {
-    protected int numer;
-
-    public Pilkarz()
-    {
-        super();
-        this.numer = 0;
-    }
-
-    public Pilkarz(String imie, String nazwisko, int numer) {
-        super(imie, nazwisko);
-        this.numer = numer;
-    }
-
-    public int getNumer() { return numer; }
-
-    @Override
-    public String toString() {
-        return imie + " " + nazwisko + " (Numer: " + numer + ")";
-    }
-
-    @Override
-    public void odczytaj(String plik)
-    {
-        try
-        {
-            FileInputStream plikIn = new FileInputStream(plik);
-            ObjectInputStream in = new ObjectInputStream(plikIn);
-
-            Pilkarz pom = (Pilkarz) in.readObject();
-
-            this.imie = pom.imie;
-            this.nazwisko = pom.nazwisko;
-            this.numer = pom.numer;
-
-            in.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
-            System.out.println("Nie znaleziono klasy");
-            e.printStackTrace();
-        }
-    }
-}
-
 class Trener extends Czlowiek {
 
     private int rok;
@@ -165,15 +116,22 @@ class Trener extends Czlowiek {
     }
 }
 
-class Napastnik extends Pilkarz {
+class Pilkarz extends Czlowiek {
+    protected int numer;
+    protected int bramki = 0;
 
-    private int bramki = 0;
-
-    public Napastnik() { super(); }
-
-    public Napastnik(String imie, String nazwisko, int numer) {
-        super(imie, nazwisko, numer);
+    public Pilkarz()
+    {
+        super();
+        this.numer = 0;
     }
+
+    public Pilkarz(String imie, String nazwisko, int numer) {
+        super(imie, nazwisko);
+        this.numer = numer;
+    }
+
+    public int getNumer() { return numer; }
 
     public void dodajBramke()
     {
@@ -184,7 +142,7 @@ class Napastnik extends Pilkarz {
 
     @Override
     public String toString() {
-        return imie + " " + nazwisko + " (Numer: " + numer + ")\nStrzelone bramki: " + bramki;
+        return numer + ". " + imie + " " + nazwisko;
     }
 
     @Override
@@ -195,12 +153,11 @@ class Napastnik extends Pilkarz {
             FileInputStream plikIn = new FileInputStream(plik);
             ObjectInputStream in = new ObjectInputStream(plikIn);
 
-            Napastnik pom = (Napastnik) in.readObject();
+            Pilkarz pom = (Pilkarz) in.readObject();
 
             this.imie = pom.imie;
             this.nazwisko = pom.nazwisko;
             this.numer = pom.numer;
-            this.bramki = pom.bramki;
 
             in.close();
         }
@@ -230,11 +187,11 @@ class Kapitan extends Pilkarz {
         this.rok = rok;
     }
 
-    public int getRok() { return rok; } 
+    public int getRok() { return rok; }
 
     @Override
     public String toString() {
-        return super.toString() + "\nKapitan od: " + rok;
+        return super.toString() + "(" + rok + ")";
     }
 
     @Override
@@ -266,9 +223,45 @@ class Kapitan extends Pilkarz {
     }
 }
 
+class Napastnik extends Pilkarz {
+
+    public Napastnik() { super(); }
+
+    public Napastnik(String imie, String nazwisko, int numer) {
+        super(imie, nazwisko, numer);
+    }
+
+    @Override
+    public void odczytaj(String plik)
+    {
+        try
+        {
+            FileInputStream plikIn = new FileInputStream(plik);
+            ObjectInputStream in = new ObjectInputStream(plikIn);
+
+            Napastnik pom = (Napastnik) in.readObject();
+
+            this.imie = pom.imie;
+            this.nazwisko = pom.nazwisko;
+            this.numer = pom.numer;
+            this.bramki = pom.bramki;
+
+            in.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ClassNotFoundException e)
+        {
+            System.out.println("Nie znaleziono klasy");
+            e.printStackTrace();
+        }
+    }
+}
+
 class Bramkarz extends Pilkarz {
     private int liczbaObron = 0;
-    private int bramki = 0;
 
     public Bramkarz() { super(); }
 
@@ -280,20 +273,13 @@ class Bramkarz extends Pilkarz {
         liczbaObron++;
     }
 
-    public void dodajBramke()
-    {
-        bramki++;
-    }
-
     public int getLiczbaObron() {
         return liczbaObron;
     }
 
-    public int getBramki() { return bramki; }
-
     @Override
     public String toString() {
-        return super.toString() + "\nBramkarz\nObrony: " + liczbaObron + "\nBramki: " + bramki;
+        return "(B) " + super.toString();
     }
 
     @Override
@@ -329,12 +315,17 @@ class Bramkarz extends Pilkarz {
 class Gol {
     private Pilkarz strzelec;
     private int minuta;
+
     public Gol(Pilkarz strzelec, int minuta) {
         this.strzelec = strzelec;
         this.minuta = minuta;
     }
     public Pilkarz getStrzelec() {
         return strzelec;
+    }
+
+    public int getMinuta() {
+        return minuta;
     }
 
     @Override
@@ -347,11 +338,29 @@ class Kartka {
     private Pilkarz pilkarz;
     private String kolor;
     private int minuta;
+    private String druzyna;
 
-    public Kartka(Pilkarz pilkarz, String kolor, int minuta) {
+    public Kartka(Pilkarz pilkarz, String kolor, int minuta, String druzyna) {
         this.pilkarz = pilkarz;
         this.kolor = kolor;
         this.minuta = minuta;
+        this.druzyna = druzyna;
+    }
+
+    public Pilkarz getPilkarz() {
+        return pilkarz;
+    }
+
+    public String getKolor() {
+        return kolor;
+    }
+
+    public int getMinuta() {
+        return minuta;
+    }
+
+    public String getDruzyna() {
+        return druzyna;
     }
 
     @Override
@@ -360,8 +369,8 @@ class Kartka {
     }
 }
 
-class Mecz implements Serializable
-{
+
+class Mecz implements Serializable {
     private String druzyna1;
     private String druzyna2;
     private List<Gol> gole;
@@ -389,8 +398,8 @@ class Mecz implements Serializable
         }
     }
 
-    public void dodajKartke(Pilkarz pilkarz, String kolor, int minuta) {
-        kartki.add(new Kartka(pilkarz, kolor, minuta));
+    public void dodajKartke(Pilkarz pilkarz, String kolor, int minuta, String druzyna) {
+        kartki.add(new Kartka(pilkarz, kolor, minuta, druzyna));
     }
 
     public String getDruzyna1() {
@@ -407,6 +416,14 @@ class Mecz implements Serializable
 
     public int getBramki2() {
         return bramki2;
+    }
+
+    public List<Gol> getGole() {
+        return gole;
+    }
+
+    public List<Kartka> getKartki() {
+        return kartki;
     }
 
     public boolean czyStrzelec(Pilkarz pilkarz) {
@@ -431,54 +448,43 @@ class Mecz implements Serializable
         return "Mecz: " + druzyna1 + " vs " + druzyna2 + "\nGole: " + gole + "\nKartki: " + kartki + "\nWynik: " + bramki1 + " - " + bramki2;
     }
 
-    public void zapisz(String plik)
-    {
-        try
-        {
+    public void zapisz(String plik) {
+        try {
             FileOutputStream plikOut = new FileOutputStream(plik);
             ObjectOutputStream out = new ObjectOutputStream(plikOut);
 
             out.writeObject(this);
             out.close();
             System.out.println("Zapisano");
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void odczytaj(String plik)
-    {
-        try
-        {
+    public void odczytaj(String plik) {
+        try {
             FileInputStream plikIn = new FileInputStream(plik);
             ObjectInputStream in = new ObjectInputStream(plikIn);
 
             Mecz pom = (Mecz) in.readObject();
 
-        this.druzyna1 = pom.druzyna1;
-        this.druzyna2 = pom.druzyna2;
-        this.gole     = pom.gole;
-        this.kartki   = pom.kartki;
-        this.bramki1  = pom.bramki1;
-        this.bramki2  = pom.bramki2;
-        this.czyZaktualizowano = pom.czyZaktualizowano;
+            this.druzyna1 = pom.druzyna1;
+            this.druzyna2 = pom.druzyna2;
+            this.gole = pom.gole;
+            this.kartki = pom.kartki;
+            this.bramki1 = pom.bramki1;
+            this.bramki2 = pom.bramki2;
+            this.czyZaktualizowano = pom.czyZaktualizowano;
 
             in.close();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Nie znaleziono klasy");
             e.printStackTrace();
         }
     }
 }
-
 
 
 class Druzyna implements Serializable
@@ -545,6 +551,26 @@ class Druzyna implements Serializable
         return rozegraneMecze;
     }
 
+    public int getWygrane() {
+        return wygrane;
+    }
+
+    public int getRemisy() {
+        return remisy;
+    }
+
+    public int getPrzegrane() {
+        return przegrane;
+    }
+
+    public int getBramkiZdobyte() {
+        return bramkiZdobyte;
+    }
+
+    public int getBramkiStracone() {
+        return bramkiStracone;
+    }
+
     public void setTrener(Trener trener)
     {
         this.trener = trener;
@@ -558,26 +584,21 @@ class Druzyna implements Serializable
     public void dodajPilkarza(Pilkarz pilkarz)
     {
         this.pilkarze.add(pilkarz);
-    } 
-
-    public String getTrener()
-    {
-        return trener.toString();
     }
 
-    public String getKapitan()
+    public Trener getTrener()
     {
-        return kapitan.toString();
+        return trener;
     }
 
-    public String getPilkarze()
+    public Kapitan getKapitan()
     {
-        String lista_pilkarzy = "";
-        for (Pilkarz pilkarz : this.pilkarze)
-        {
-            lista_pilkarzy += pilkarz.toString() + "\n";
-        }
-        return lista_pilkarzy;
+        return kapitan;
+    }
+
+    public List<Pilkarz> getPilkarze()
+    {
+        return pilkarze;
     }
 
     @Override
@@ -636,7 +657,7 @@ class Druzyna implements Serializable
 
 public class Tabela implements Serializable
 {
-    private List<Druzyna> druzyny;
+    public List<Druzyna> druzyny;
     public List<Mecz> mecze;
 
     public Tabela() {

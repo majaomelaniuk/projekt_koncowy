@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main extends JFrame {
+class Main extends JFrame {
     private Tabela tabela;
     private JTextArea textArea;
     private JTextField druzyna1Field;
@@ -84,7 +84,7 @@ public class Main extends JFrame {
         inputPanel.add(addButton);
 
         add(inputPanel, BorderLayout.EAST);
-        
+
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Opcje");
 
@@ -154,11 +154,11 @@ public class Main extends JFrame {
             int minuta = Integer.parseInt(minutaText);
             Pilkarz pilkarz = new Pilkarz(imie, nazwisko, numer);
 
-            Mecz ostatniMecz = tabela.mecze.get(tabela.mecze.size()-1);
+            Mecz ostatniMecz = tabela.mecze.get(tabela.mecze.size() - 1);
             if (typ.equals("Gol")) {
                 ostatniMecz.dodajGol(druzyna, pilkarz, minuta);
             } else if (typ.equals("Kartka")) {
-                ostatniMecz.dodajKartke(pilkarz, kolor, minuta);
+                ostatniMecz.dodajKartke(pilkarz, kolor, minuta, druzyna);
             }
 
             textArea.setText(tabela.toString());
@@ -180,7 +180,7 @@ public class Main extends JFrame {
     private void przegladMeczow() {
         String[] kolumny = {"Drużyna 1", "Drużyna 2", "Wynik"};
         Object[][] dane = new Object[tabela.mecze.size()][3];
-        for (int i = 0; i<tabela.mecze.size(); i++) {
+        for (int i = 0; i < tabela.mecze.size(); i++) {
             Mecz mecz = tabela.mecze.get(i);
             dane[i][0] = mecz.getDruzyna1();
             dane[i][1] = mecz.getDruzyna2();
@@ -209,7 +209,51 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Main().setVisible(true);
+                Tabela tabela = new Tabela();
+
+                Druzyna druzyna1 = new Druzyna("WKS");
+                Druzyna druzyna2 = new Druzyna("Legia");
+                Druzyna druzyna3 = new Druzyna("Lech");
+                Druzyna druzyna4 = new Druzyna("Jagiellonia");
+                Druzyna druzyna5 = new Druzyna("Widzew");
+                Druzyna druzyna6 = new Druzyna("Piast");
+                tabela.dodajDruzyne(druzyna1);
+                tabela.dodajDruzyne(druzyna2);
+                tabela.dodajDruzyne(druzyna3);
+                tabela.dodajDruzyne(druzyna4);
+                tabela.dodajDruzyne(druzyna5);
+                tabela.dodajDruzyne(druzyna6);
+
+                Mecz mecz1 = new Mecz("WKS", "Legia");
+                mecz1.dodajGol("WKS", new Pilkarz("Erik", "Exposito", 10), 15);
+                mecz1.dodajGol("Legia", new Pilkarz("Artur", "Jędrzejczyk", 9), 25);
+                mecz1.dodajKartke(new Pilkarz("Erik", "Exposito", 10), "czerwona", 65, "WKS");
+                tabela.dodajMecz(mecz1);
+
+                Mecz mecz2 = new Mecz("Lech", "Jagiellonia");
+                mecz2.dodajGol("Jagiellonia", new Pilkarz("Jesús", "Imaz", 7), 48);
+                mecz2.dodajGol("Jagiellonia", new Pilkarz("Jesús", "Imaz", 7), 40);
+                mecz2.dodajKartke(new Pilkarz("Mikael", "Ishak", 11), "żółta", 50, "Lech");
+                tabela.dodajMecz(mecz2);
+
+                Mecz mecz3 = new Mecz("Widzew", "Piast");
+                mecz3.dodajKartke(new Pilkarz("Bartłomiej", "Pawłowski", 9), "żółta", 70, "Widzew");
+                tabela.dodajMecz(mecz3);
+
+                Mecz mecz4 = new Mecz("Legia", "Piast");
+                mecz4.dodajGol("Legia", new Pilkarz("Rafael", "Lopes", 20), 45);
+                mecz4.dodajGol("Piast", new Pilkarz("Kamil", "Wilczek", 13), 80);
+                mecz4.dodajKartke(new Pilkarz("Rafael", "Lopes", 20), "czerwona", 85, "Legia");
+                tabela.dodajMecz(mecz4);
+
+                Mecz mecz5 = new Mecz("Lech", "WKS");
+                mecz5.dodajGol("WKS", new Pilkarz("Robert", "Pich", 11), 55);
+                mecz5.dodajKartke(new Pilkarz("Joao", "Amaral", 10), "żółta", 65, "Lech");
+                tabela.dodajMecz(mecz5);
+
+                tabela.aktualizujTabele();
+                TabelaWidok tabelaWidok = new TabelaWidok(tabela);
+                tabelaWidok.setVisible(true);
             }
         });
     }
